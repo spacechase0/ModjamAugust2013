@@ -2,3 +2,45 @@ item.petConverter.name=Pet Converter
 
 entity.pet.cat=Cat
 entity.pet.dog=Dog
+
+pet.skill.req=Requires
+
+pet.skill.hunger.name=Hunger
+pet.skill.hunger.desc=Allows eating
+pet.skill.hunger.eatOtherFood.name=Eat other foods
+pet.skill.hunger.eatOtherFood.desc=Eat food that the other species can eat
+pet.skill.hunger.eatPlants.name=Eat plants
+pet.skill.hunger.eatPlants.name=Alows eating plant matter
+pet.skill.hunger.eatProcessed.name=Eat processed
+pet.skill.hunger.eatProcessed.desc=Allows eating of process "human" food.
+pet.skill.hunger.eatGross.name=Eat gross food
+pet.skill.hunger.eatGross.desc=Allows eating of spider eyes and rotten flesh
+
+pet.skill.combat.name=Combat
+pet.skill.combat.desc=Attacking for 2 hearts
+pet.skill.combat.upgrade1.name=Upgrade Damage (1)
+pet.skill.combat.upgrade1.desc=Attacking for 2.5 hearts
+pet.skill.combat.upgrade2.name=Upgrade Damage (2)
+pet.skill.combat.upgrade2.desc=Attacking for 3 hearts
+
+pet.skill.repellant.name=Mob Repellant
+pet.skill.repellant.desc=Keeps creepers away
+pet.skill.repellant.larger.name=Radius upgrade
+pet.skill.repellant.larger.desc=Increases range
+pet.skill.repellant.undead.name=Undead Repellant
+pet.skill.repellant.undead.name=Keeps undead away
+pet.skill.repellant.spiders.name=Bug Repellant
+pet.skill.repellant.spiders.desc=Keeps the creepy crawlies away
+
+pet.skill.inventory.name=Inventory
+pet.skill.inventory.desc=Allows the pet 3 slots of inventory
+pet.skill.inventory.upgrade1.name=Upgrade Slots (1)
+pet.skill.inventory.upgrade1.desc=Adds 3 more slots
+pet.skill.inventory.upgrade2.name=Upgrade Slots (2)
+pet.skill.inventory.upgrade2.desc=Adds 3 more slots
+pet.skill.inventory.selSufficient.name=Self Sufficient
+pet.skill.inventory.selSufficient.desc=Allows the pet to eat from it's own inventory
+pet.skill.inventory.armor.name=Armor Slot
+pet.skill.inventory.armor.desc=Allows the pet to equip armor
+pet.skill.inventory.armor.name=Weapon Slot
+pet.skill.inventory.armor.desc=Allows the pet to equip a weapon over their claws
