@@ -11,6 +11,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -44,6 +45,8 @@ public class UsefulPets
 		registerEntities();
 		registerLanguage();
 		proxy.registerRenderers();
+		
+		NetworkRegistry.instance().registerGuiHandler( this, new GuiHandler() );
 	}
 	
 	@EventHandler
@@ -100,4 +103,6 @@ public class UsefulPets
 	
 	private Configuration config;
 	private static final int ITEM_ID_BASE = 15764;
+	
+	public static final int PET_GUI_ID = 0;
 }

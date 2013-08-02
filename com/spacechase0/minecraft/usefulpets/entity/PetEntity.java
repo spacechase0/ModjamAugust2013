@@ -3,6 +3,7 @@ package com.spacechase0.minecraft.usefulpets.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.spacechase0.minecraft.usefulpets.UsefulPets;
 import com.spacechase0.minecraft.usefulpets.ai.FollowOwnerAI;
 import com.spacechase0.minecraft.usefulpets.ai.SitAI;
 import com.spacechase0.minecraft.usefulpets.pet.*;
@@ -285,6 +286,13 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     @Override
     public boolean interact( EntityPlayer player )
     {
+    	if ( player.isSneaking() )
+    	{
+    		UsefulPets.proxy.setPendingPetForGui( this );
+    		player.openGui( UsefulPets.instance, UsefulPets.PET_GUI_ID, worldObj, 0, 0, 0 );
+    		return false;
+    	}
+    	
     	ItemStack held = player.getHeldItem();
     	if ( held.getItem() instanceof ItemFood )
     	{
