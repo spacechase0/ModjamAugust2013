@@ -15,6 +15,16 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		super( world );
 	}
 	
+	public int getLevel()
+	{
+		return level;
+	}
+	
+	public void setLevel( int theLevel )
+	{
+		level = theLevel;
+	}
+	
 	public PetType getPetType()
 	{
 		return type;
@@ -54,4 +64,5 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	// Variables
 	private String ownerName = "Player";
 	private PetType type = PetType.CAT;
+	private int level = 1;
 }
