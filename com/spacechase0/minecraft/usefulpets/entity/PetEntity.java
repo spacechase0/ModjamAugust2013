@@ -22,6 +22,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.AttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -48,22 +49,74 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	
 	public int getLevel()
 	{
-		return level;
+		return dataWatcher.getWatchableObjectInt( DATA_LEVEL );
 	}
 	
-	public void setLevel( int theLevel )
+	public void setLevel( int level )
 	{
-		level = theLevel;
+		dataWatcher.updateObject( DATA_LEVEL, level );
 	}
 	
 	public int getFreeSkillPoints()
 	{
-		return freeSkillPoints;
+		return dataWatcher.getWatchableObjectInt( DATA_FREE_POINTS );
 	}
 	
 	public void setFreeSkillPoints( int points )
 	{
-		freeSkillPoints = points;
+		dataWatcher.updateObject( DATA_FREE_POINTS, points );
+	}
+	
+	// TODO: Test me
+	public boolean hasSkill( int id )
+	{
+		return skills.contains( id );
+	}
+	
+	// TODO: Test me
+	public void addSkill( int id )
+	{
+		if ( hasSkill( id ) || getFreeSkillPoints() < 1 )
+		{
+			return;
+		}
+		
+		skills.add( id );
+		setFreeSkillPoints( getFreeSkillPoints() - 1 );
+	}
+	
+	// TODO: Test me
+	public void removeSkill( int id )
+	{
+		if ( hasSkill( id ) && !type.defaultSkills.contains( id ) )
+		{
+			for ( int sid : Skill.skills.keySet() )
+			{
+				for ( int reqId : Skill.forId( sid ).skillReqs )
+				{
+					if ( reqId == id )
+					{
+						removeSkill( sid );
+						break;
+					}
+				}
+			}
+			
+			skills.remove( id );
+			setFreeSkillPoints( getFreeSkillPoints() + 1 );
+		}
+	}
+	
+	// TODO: Test me
+	public void resetSkills()
+	{
+		for ( int id : type.defaultSkills )
+		{
+			skills.remove( id );
+		}
+		
+		setFreeSkillPoints( getFreeSkillPoints() + skills.size() );
+		setPetType( type ); // Resets skills to default
 	}
 	
 	public PetType getPetType()
@@ -181,6 +234,9 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         dataWatcher.addObject( DATA_TYPE, "cat" );
         dataWatcher.addObject( DATA_SITTING, ( byte ) 0 );
         dataWatcher.addObject( DATA_HUNGER, 20.f );
+        dataWatcher.addObject( DATA_LEVEL, 1 );
+        dataWatcher.addObject( DATA_FREE_POINTS, 1 );
+        dataWatcher.addObject( DATA_SKILLS, new ItemStack( Item.stick ) );
     }
     
     @Override
@@ -196,10 +252,11 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     		setPosition( posX, -4.f, posZ );
     	}
     	
-    	if ( worldObj.isRemote )
+    	if ( worldObj.isRemote && ++syncTimer == 20 )
     	{
     		ownerName = dataWatcher.getWatchableObjectString( DATA_OWNER );
         	type = PetType.forName( dataWatcher.getWatchableObjectString( DATA_TYPE ) );
+        	
     	}
     	else
     	{
@@ -372,13 +429,12 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	// Pet info
 	private String ownerName = "Player";
 	private PetType type = PetType.CAT;
-	private int level = 1;
-	private int freeSkillPoints = 1;
 	private List< Integer > skills = new ArrayList< Integer >();
 	
 	// State stuff
 	private float saturation;
-	private int regenTicks;
+	private int regenTicks = 0;
+	private int syncTimer = 0;
 	
 	// AI stuff
 	private SitAI aiSit = new SitAI( this );
@@ -387,6 +443,9 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	public static final int DATA_TYPE = 21;
 	public static final int DATA_SITTING = 22;
 	public static final int DATA_HUNGER = 23;
+	public static final int DATA_LEVEL = 24;
+	public static final int DATA_FREE_POINTS = 25;
+	public static final int DATA_SKILLS = 26;
 	
 	public static final float MAX_HUNGER = 20;
 }

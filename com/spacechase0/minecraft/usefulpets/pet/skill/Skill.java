@@ -7,11 +7,13 @@ import com.spacechase0.minecraft.usefulpets.pet.food.FoodType;
 
 public class Skill
 {
-	public Skill( int theId, String theName )
+	public Skill( int theId, String theName, float px, float py )
 	{
 		id = theId;
 		name = theName;
 		levelReq = 1;
+		x = px;
+		y = py;
 		
 		if ( skills.containsKey( id ) )
 		{
@@ -20,15 +22,17 @@ public class Skill
 		skills.put( id, this );
 	}
 	
-	public Skill( int theId, String theName, int theLevelReq, int[] theSkillReqs )
+	public Skill( int theId, String theName, float px, float py, int theLevelReq, int[] theSkillReqs )
 	{
-		this( theId, theName );
+		this( theId, theName, px, py );
 		levelReq = theLevelReq;
 		skillReqs = theSkillReqs;
 	}
 	
 	public final int id;
 	public final String name;
+	public final float x;
+	public final float y;
 	public int levelReq;
 	public int[] skillReqs;
 	

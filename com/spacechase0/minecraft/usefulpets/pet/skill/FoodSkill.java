@@ -6,7 +6,7 @@ public class FoodSkill extends Skill
 {
 	public FoodSkill( int theId, String theName, FoodType theType )
 	{
-		super( theId, ( theName.equals( "" ) ? "hunger" : ( "hunger." + theName ) ) );
+		super( theId, ( theName.equals( "" ) ? "hunger" : ( "hunger." + theName ) ), getPosX( theId, theName ), getPosY( theId, theName ) );
 		type = theType;
 		
 		if ( name.equals( "" ) )
@@ -23,6 +23,30 @@ public class FoodSkill extends Skill
 	{
 		this( theId, theName, theType );
 		levelReq = theLevelReq;
+	}
+	
+	private static float getPosX( int id, String name )
+	{
+		if ( name.equals( "" ) )
+		{
+			return 2;
+		}
+		
+		int diff = id - mainId;
+		
+		return 2 - 0.5f + ( diff % 2 );
+	}
+	
+	private static float getPosY( int id, String name )
+	{
+		if ( name.equals( "" ) )
+		{
+			return 0;
+		}
+		
+		int diff = id - mainId;
+		
+		return 1.5f + ( diff / 2 );
 	}
 	
 	public final FoodType type;
