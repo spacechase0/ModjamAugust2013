@@ -152,7 +152,7 @@ public class DogModel extends ModelBase
         this.wolfMane.rotateAngleZ = entitywolf.getShakeAngle(par4, -0.08F);
         this.wolfBody.rotateAngleZ = entitywolf.getShakeAngle(par4, -0.16F);
         this.wolfTail.rotateAngleZ = entitywolf.getShakeAngle(par4, -0.2F);
-        */
+        //*/
     }
 
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
@@ -160,6 +160,6 @@ public class DogModel extends ModelBase
         super.setRotationAngles(par1, par2, par3, par4, par5, par6, par7Entity);
         this.wolfHeadMain.rotateAngleX = par5 / (180F / (float)Math.PI);
         this.wolfHeadMain.rotateAngleY = par4 / (180F / (float)Math.PI);
-        this.wolfTail.rotateAngleX = par3;
+        this.wolfTail.rotateAngleX = 1.25f;//par3;
     }
 }

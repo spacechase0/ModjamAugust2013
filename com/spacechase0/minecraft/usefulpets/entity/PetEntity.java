@@ -94,7 +94,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         super.entityInit();
         
         dataWatcher.addObject( DATA_OWNER, "Player" );
-        dataWatcher.addObject( DATA_TYPE, "dog" );
+        dataWatcher.addObject( DATA_TYPE, "cat" );
         dataWatcher.addObject( DATA_SITTING, ( byte ) 0 );
     }
     
