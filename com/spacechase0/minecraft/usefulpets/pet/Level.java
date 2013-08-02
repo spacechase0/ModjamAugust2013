@@ -20,13 +20,13 @@ public class Level
 	{
 		List< ItemStack > list = new ArrayList< ItemStack >();
 		
-		int coal = level * 4;
+		int coal = level;
 		int iron = ( level - 3 ) * 2;
 		int redstone = ( level - 7 ) * 2;
 		int gold = ( level - 12 ) * 2;
 		int diamond = ( level - 16 ) * 3;
 		
-		list.add( new ItemStack( Item.coal, coal ) );
+		list.add( new ItemStack( Block.field_111034_cE, coal ) );
 		if ( level >= 4 )
 		{
 			list.add( new ItemStack( Item.ingotIron, iron ) );
