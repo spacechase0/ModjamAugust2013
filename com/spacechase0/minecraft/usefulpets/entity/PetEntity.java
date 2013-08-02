@@ -15,6 +15,8 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.AttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -68,6 +70,36 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		dataWatcher.updateObject( DATA_SITTING, ( byte )( sitting ? 1 : 0 ) );
 	}
 	
+	public float getHunger()
+	{
+		return dataWatcher.func_111145_d( DATA_HUNGER );
+	}
+	
+	public void useHunger( float amount )
+	{
+		float satDiff = Math.min( amount, saturation );
+		saturation -= satDiff;
+		if ( satDiff != amount )
+		{
+			setHunger( getHunger() - ( amount - satDiff ) );
+		}
+	}
+	
+	public void setHunger( float hunger )
+	{
+		dataWatcher.updateObject( DATA_HUNGER, hunger );
+	}
+	
+	public float getSaturation()
+	{
+		return saturation;
+	}
+	
+	public void setSaturation( float theSaturation )
+	{
+		saturation = theSaturation;
+	}
+	
 	// Entity
     @Override
     public void writeEntityToNBT( NBTTagCompound tag)
@@ -79,6 +111,8 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         tag.setInteger( "Level", getLevel() );
         
         tag.setBoolean( "Sitting", isSitting() );
+        tag.setFloat( "Hunger", getHunger() );
+        tag.setFloat( "Saturation", getSaturation() );
     }
 
     @Override
@@ -91,6 +125,8 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         setLevel( tag.getInteger( "Level" ) );
         
         setSitting( tag.getBoolean( "Sitting" ) );
+        setHunger( tag.getFloat( "Hunger" ) );
+        setSaturation( tag.getFloat( "Saturation" ) );
     }
     
     @Override
@@ -101,6 +137,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         dataWatcher.addObject( DATA_OWNER, "Player" );
         dataWatcher.addObject( DATA_TYPE, "cat" );
         dataWatcher.addObject( DATA_SITTING, ( byte ) 0 );
+        dataWatcher.addObject( DATA_HUNGER, 20.f );
     }
     
     @Override
@@ -120,6 +157,18 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	{
     		ownerName = dataWatcher.getWatchableObjectString( DATA_OWNER );
         	type = PetType.forName( dataWatcher.getWatchableObjectString( DATA_TYPE ) );
+    	}
+    	else
+    	{
+    		if ( getHunger() >= MAX_HUNGER / 2 )
+    		{
+    			if ( ++regenTicks == 35 )
+    			{
+    				setEntityHealth( func_110143_aJ() + 1 );
+    				useHunger( 0.25f );
+    				regenTicks = 0;
+    			}
+    		}
     	}
     }
     
@@ -190,6 +239,15 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     {
         return false;
     }
+    
+    public boolean interact( EntityPlayer player )
+    {
+    	ItemStack held = player.getHeldItem();
+    	if ( held.getItem() instanceof ItemFood )
+    	{
+    		// TODO
+    	}
+    }
 
 	// EntityAnimal
 	@Override
@@ -235,10 +293,17 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	private PetType type = PetType.CAT;
 	private int level = 1;
 	
+	// State stuff
+	private float saturation;
+	private int regenTicks;
+	
 	// AI stuff
 	private SitAI aiSit = new SitAI( this );
 	
 	public static final int DATA_OWNER = 20;
 	public static final int DATA_TYPE = 21;
 	public static final int DATA_SITTING = 22;
+	public static final int DATA_HUNGER = 23;
+	
+	public static final float MAX_HUNGER = 20;
 }

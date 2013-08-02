@@ -64,7 +64,11 @@ public class PetEntityRenderer extends RenderLiving
 		int health = ( int ) pet.func_110143_aJ();
 		int maxHealth = ( int ) pet.func_110138_aP();
 		
-		renderLivingLabel( entity, health + "/" + maxHealth, x, y, z, 16 );
+		String hp = "HP: " + health + "/" + maxHealth;
+		String food = "Food: " + ( ( int ) pet.getHunger() ) + "/" + ( ( int ) PetEntity.MAX_HUNGER );
+		
+		renderLivingLabel( entity, hp, x, y, z, 4 );
+		renderLivingLabel( entity, food, x, y - 0.3f, z, 4 );
     }
 	
 	private final ModelBase catModel = new CatModel();
