@@ -28,7 +28,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		
 		getNavigator().setAvoidsWater( true );
         tasks.addTask( 1, new EntityAISwimming( this ) );
-        tasks.addTask( 2, aiSit );
+        //tasks.addTask( 2, aiSit );
         tasks.addTask( 5, new FollowOwnerAI( this, 1.0D, 10.0F, 3.5F ) );
         tasks.addTask( 7, new EntityAIWander(this, 1.0D));
         tasks.addTask( 9, new EntityAIWatchClosest( this, EntityPlayer.class, 9.0F ) );
@@ -102,6 +102,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     @Override
     public void onEntityUpdate()
     {
+    	super.onEntityUpdate();
     	if ( worldObj.isRemote )
     	{
     		ownerName = dataWatcher.getWatchableObjectString( DATA_OWNER );
