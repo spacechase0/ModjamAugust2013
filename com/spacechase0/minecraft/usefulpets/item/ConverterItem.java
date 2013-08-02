@@ -59,9 +59,9 @@ public class ConverterItem extends Item
 			System.out.println( "Converting pet; setting type to " + type.name );
 			
 			PetEntity pet = new PetEntity( entity.worldObj );
-			pet.posX = entity.posX;
-			pet.posY = entity.posY;
-			pet.posZ = entity.posZ;
+			pet.setPosition( entity.posX, entity.posY, entity.posZ );
+			pet.rotationPitch = entity.rotationPitch;
+			pet.rotationYaw = entity.rotationYaw;
 			pet.setOwnerName( tameable.getOwnerName() );
 			pet.setPetType( type );
 			

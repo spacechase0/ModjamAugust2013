@@ -67,6 +67,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	}
 	
 	// Entity
+    @Override
     public void writeEntityToNBT( NBTTagCompound tag)
     {
         super.writeEntityToNBT( tag );
@@ -77,7 +78,8 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         
         tag.setBoolean( "Sitting", isSitting() );
     }
-    
+
+    @Override
     public void readEntityFromNBT( NBTTagCompound tag )
     {
         super.readEntityFromNBT( tag );
@@ -89,6 +91,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         setSitting( tag.getBoolean( "Sitting" ) );
     }
     
+    @Override
     protected void entityInit()
     {
         super.entityInit();
@@ -98,11 +101,10 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         dataWatcher.addObject( DATA_SITTING, ( byte ) 0 );
     }
     
-    // EntityLivingBase, EntityLiving
     @Override
-    public void onEntityUpdate()
+    public void onUpdate()
     {
-    	super.onEntityUpdate();
+    	super.onUpdate();
     	if ( worldObj.isRemote )
     	{
     		ownerName = dataWatcher.getWatchableObjectString( DATA_OWNER );
@@ -110,6 +112,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	}
     }
     
+    // EntityLivingBase, EntityLiving
     @Override
     protected boolean canDespawn()
     {
