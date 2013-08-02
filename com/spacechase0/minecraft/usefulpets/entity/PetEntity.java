@@ -1,8 +1,14 @@
 package com.spacechase0.minecraft.usefulpets.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.spacechase0.minecraft.usefulpets.ai.FollowOwnerAI;
 import com.spacechase0.minecraft.usefulpets.ai.SitAI;
 import com.spacechase0.minecraft.usefulpets.pet.*;
+import com.spacechase0.minecraft.usefulpets.pet.skill.FoodSkill;
+import com.spacechase0.minecraft.usefulpets.pet.skill.Skill;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityOwnable;
@@ -18,6 +24,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -32,7 +39,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		
 		getNavigator().setAvoidsWater( true );
         tasks.addTask( 1, new EntityAISwimming( this ) );
-        //tasks.addTask( 2, aiSit );
+        tasks.addTask( 2, aiSit );
         tasks.addTask( 5, new FollowOwnerAI( this, 1.0D, 10.0F, 3.5F ) );
         tasks.addTask( 7, new EntityAIWander(this, 1.0D));
         tasks.addTask( 9, new EntityAIWatchClosest( this, EntityPlayer.class, 9.0F ) );
@@ -48,6 +55,16 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		level = theLevel;
 	}
 	
+	public int getFreeSkillPoints()
+	{
+		return freeSkillPoints;
+	}
+	
+	public void setFreeSkillPoints( int points )
+	{
+		freeSkillPoints = points;
+	}
+	
 	public PetType getPetType()
 	{
 		return type;
@@ -57,6 +74,8 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	{
 		type = theType;
 		setSize( type.sizeX, type.sizeY );
+		skills.clear();
+		skills.addAll( type.defaultSkills );
 		dataWatcher.updateObject( DATA_TYPE, type.name );
 	}
 	
@@ -87,6 +106,15 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	
 	public void setHunger( float hunger )
 	{
+		if ( hunger < 0.f )
+		{
+			hunger = 0.f;
+		}
+		else if ( hunger > MAX_HUNGER )
+		{
+			hunger = MAX_HUNGER;
+		}
+		
 		dataWatcher.updateObject( DATA_HUNGER, hunger );
 	}
 	
@@ -109,6 +137,13 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         tag.setString( "Owner", getOwnerName() );
         tag.setString( "Type", getPetType().name );
         tag.setInteger( "Level", getLevel() );
+        tag.setInteger( "FreeSkillPoints", getFreeSkillPoints() );
+        int[] theSkills = new int[ skills.size() ];
+        for ( int i = 0; i < skills.size(); ++i )
+        {
+        	theSkills[ i ] = skills.get( i );
+        }
+        tag.setTag( "Skills", new NBTTagIntArray( "Skills", theSkills ) );
         
         tag.setBoolean( "Sitting", isSitting() );
         tag.setFloat( "Hunger", getHunger() );
@@ -123,6 +158,13 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         setOwnerName( tag.getString( "Owner" ) );
         setPetType( PetType.forName( tag.getString( "Type" ) ) );
         setLevel( tag.getInteger( "Level" ) );
+        setFreeSkillPoints( tag.getInteger( "FreeSkillPoints" ) );
+        skills.clear();
+        int[] theSkills = ( ( NBTTagIntArray ) tag.getTag( "Skills" ) ).intArray;
+        for ( int id : theSkills )
+        {
+        	skills.add( id );
+        }
         
         setSitting( tag.getBoolean( "Sitting" ) );
         setHunger( tag.getFloat( "Hunger" ) );
@@ -160,7 +202,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	}
     	else
     	{
-    		if ( getHunger() >= MAX_HUNGER / 2 )
+    		if ( getHunger() >= MAX_HUNGER / 2 && func_110143_aJ() < func_110138_aP() )
     		{
     			if ( ++regenTicks == 35 )
     			{
@@ -240,13 +282,44 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         return false;
     }
     
+    @Override
     public boolean interact( EntityPlayer player )
     {
     	ItemStack held = player.getHeldItem();
     	if ( held.getItem() instanceof ItemFood )
     	{
-    		// TODO
+    		ItemFood food = ( ItemFood ) held.getItem();
+    		
+    		boolean canEat = false;
+    		for ( int id : skills )
+    		{
+    			Skill skill = Skill.forId( id );
+    			if ( !( skill instanceof FoodSkill ) )
+    			{
+    				continue;
+    			}
+    			FoodSkill foodSkill = ( FoodSkill ) skill;
+    			
+    			if ( foodSkill.type.doesMatch( type, held ) )
+    			{
+    				canEat = true;
+    				break;
+    			}
+    		}
+    		
+    		if ( canEat )
+    		{
+    			setHunger( getHunger() + food.getHealAmount() );
+    			setSaturation( getSaturation() + food.getSaturationModifier() );
+        		return true;
+    		}
     	}
+    	else
+    	{
+    		setSitting( !isSitting() );
+    	}
+    	
+    	return false;
     }
 
 	// EntityAnimal
@@ -292,6 +365,8 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	private String ownerName = "Player";
 	private PetType type = PetType.CAT;
 	private int level = 1;
+	private int freeSkillPoints = 1;
+	private List< Integer > skills = new ArrayList< Integer >();
 	
 	// State stuff
 	private float saturation;

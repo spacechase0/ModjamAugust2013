@@ -34,6 +34,11 @@ public class Skill
 	
 	public static final Map< Integer, Skill > skills = new HashMap< Integer, Skill >();
 	
+	public static Skill forId( int id )
+	{
+		return skills.get( id );
+	}
+	
 	public static Skill HUNGER = new FoodSkill( 0, "", FoodType.SPECIES );
 	public static Skill HUNGER_OTHER = new FoodSkill( 1, "eatOther", FoodType.OTHER_SPECIES );
 	public static Skill HUNGER_PLANTS = new FoodSkill( 2, "eatPlants", FoodType.PLANTS );

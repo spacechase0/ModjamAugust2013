@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.spacechase0.minecraft.usefulpets.pet.skill.Skill;
+
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.item.Item;
@@ -13,14 +15,18 @@ import net.minecraft.item.ItemStack;
 
 public enum PetType
 {
-	CAT( "cat", EntityOcelot.class, "hitt" ),
-	DOG( "dog", EntityWolf.class, "hurt" );
+	CAT( "cat", EntityOcelot.class, "hitt", new int[] { Skill.HUNGER.id } ),
+	DOG( "dog", EntityWolf.class, "hurt", new int[] { Skill.HUNGER.id } );
 	
-	PetType( String theName, Class toConvertFrom, String theHurtSound )
+	PetType( String theName, Class toConvertFrom, String theHurtSound, int[] theDefaultSkills )
 	{
 		name = theName;
 		convertFrom = toConvertFrom;
 		hurtSound = theHurtSound;
+		for ( int id : theDefaultSkills )
+		{
+			defaultSkills.add( id );
+		}
 	}
 	
 	public String getLivingSound()
@@ -47,6 +53,7 @@ public enum PetType
 	public final float sizeX = 0.6f;
 	public final float sizeY = 0.8f;
 	public final List< ItemStack > defaultFoodChoices = new ArrayList< ItemStack >();
+	public final List< Integer > defaultSkills = new ArrayList< Integer >();
 	
 	private final String hurtSound;
 	

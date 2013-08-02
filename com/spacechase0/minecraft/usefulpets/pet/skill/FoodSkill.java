@@ -9,9 +9,13 @@ public class FoodSkill extends Skill
 		super( theId, ( theName.equals( "" ) ? "hunger" : ( "hunger." + theName ) ) );
 		type = theType;
 		
-		if ( !name.equals( "" ) )
+		if ( name.equals( "" ) )
 		{
-			skillReqs = new int[] { Skill.HUNGER.id };
+			mainId = id;
+		}
+		else
+		{
+			skillReqs = new int[] { mainId };
 		}
 	}
 	
@@ -22,4 +26,5 @@ public class FoodSkill extends Skill
 	}
 	
 	public final FoodType type;
+	private static int mainId;
 }
