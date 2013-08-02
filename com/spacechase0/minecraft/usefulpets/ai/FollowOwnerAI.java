@@ -104,7 +104,7 @@ public class FollowOwnerAI extends EntityAIBase
                 {
                     if (!this.thePet.func_110167_bD())
                     {
-                        if (this.thePet.getDistanceSqToEntity(this.theOwner) >= 144.0D)
+                        if (this.thePet.getDistanceSqToEntity(this.theOwner) >= 144.0D || thePet.posY < 0 )
                         {
                             int i = MathHelper.floor_double(this.theOwner.posX) - 2;
                             int j = MathHelper.floor_double(this.theOwner.posZ) - 2;

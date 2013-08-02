@@ -107,11 +107,25 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     public void onUpdate()
     {
     	super.onUpdate();
+    	
+    	isDead = false;
+    	deathTime = 0;
+    	
+    	if ( posY < -4.f )
+    	{
+    		setPosition( posX, -4.f, posZ );
+    	}
+    	
     	if ( worldObj.isRemote )
     	{
     		ownerName = dataWatcher.getWatchableObjectString( DATA_OWNER );
         	type = PetType.forName( dataWatcher.getWatchableObjectString( DATA_TYPE ) );
     	}
+    }
+    
+    @Override
+    public void setDead()
+    {
     }
     
     // EntityLivingBase, EntityLiving
@@ -158,6 +172,23 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 
         func_110148_a( SharedMonsterAttributes.field_111267_a ).func_111128_a( 20 );
         func_110148_a( SharedMonsterAttributes.field_111263_d ).func_111128_a( 0.3 );
+    }
+    
+    @Override
+    public void onDeath( DamageSource source )
+    {
+    }
+    
+    @Override
+    public boolean isEntityAlive()
+    {
+    	return true;
+    }
+    
+    @Override
+    protected boolean isMovementBlocked()
+    {
+        return false;
     }
 
 	// EntityAnimal
