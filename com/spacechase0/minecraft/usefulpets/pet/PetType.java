@@ -18,6 +18,8 @@ public enum PetType
 	
 	public final String name;
 	public final Class convertFrom;
+	public final float sizeX = 0.6f;
+	public final float sizeY = 0.8f;
 	
 	public static final Map< String, PetType > types = new HashMap< String, PetType >();
 	

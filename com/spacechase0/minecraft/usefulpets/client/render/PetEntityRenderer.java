@@ -1,5 +1,7 @@
 package com.spacechase0.minecraft.usefulpets.client.render;
 
+import com.spacechase0.minecraft.usefulpets.client.model.CatModel;
+import com.spacechase0.minecraft.usefulpets.client.model.DogModel;
 import com.spacechase0.minecraft.usefulpets.entity.PetEntity;
 import com.spacechase0.minecraft.usefulpets.pet.PetType;
 
@@ -15,7 +17,7 @@ public class PetEntityRenderer extends RenderLiving
 {
 	public PetEntityRenderer()
 	{
-		super( new ModelOcelot(), 0.45f );
+		super( new CatModel(), 0.45f );
 	}
 
 	@Override
@@ -50,8 +52,8 @@ public class PetEntityRenderer extends RenderLiving
 		return null;
 	}
 	
-	private final ModelBase catModel = new ModelOcelot();
-	private final ModelBase dogModel = new ModelWolf();
-	private final ResourceLocation catTex = new ResourceLocation( "minecraft:/textures/entity/cat/red.png" );
-	private final ResourceLocation dogTex = new ResourceLocation( "minecraft:/textures/entity/wolf/wolf_tame.png" );
+	private final ModelBase catModel = new CatModel();
+	private final ModelBase dogModel = new DogModel();
+	private final ResourceLocation catTex = new ResourceLocation( "textures/entity/cat/red.png" );
+	private final ResourceLocation dogTex = new ResourceLocation( "textures/entity/wolf/wolf_tame.png" );
 }
