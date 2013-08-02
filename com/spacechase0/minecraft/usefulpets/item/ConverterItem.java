@@ -56,6 +56,8 @@ public class ConverterItem extends Item
 				return true;
 			}
 			
+			System.out.println( "Converting pet; setting type to " + type.name );
+			
 			PetEntity pet = new PetEntity( entity.worldObj );
 			pet.posX = entity.posX;
 			pet.posY = entity.posY;
