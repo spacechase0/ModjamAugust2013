@@ -1,16 +1,21 @@
 package com.spacechase0.minecraft.usefulpets.client.render;
 
+import org.lwjgl.opengl.GL11;
+
 import com.spacechase0.minecraft.usefulpets.client.model.CatModel;
 import com.spacechase0.minecraft.usefulpets.client.model.DogModel;
 import com.spacechase0.minecraft.usefulpets.entity.PetEntity;
 import com.spacechase0.minecraft.usefulpets.pet.PetType;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelOcelot;
 import net.minecraft.client.model.ModelWolf;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.ResourceLocation;
 
 public class PetEntityRenderer extends RenderLiving
@@ -51,6 +56,16 @@ public class PetEntityRenderer extends RenderLiving
 		
 		return null;
 	}
+	
+	@Override
+    protected void passSpecialRender(EntityLivingBase entity, double x, double y, double z)
+    {
+		PetEntity pet = ( PetEntity ) entity;
+		int health = ( int ) pet.func_110143_aJ();
+		int maxHealth = ( int ) pet.func_110138_aP();
+		
+		renderLivingLabel( entity, health + "/" + maxHealth, x, y, z, 16 );
+    }
 	
 	private final ModelBase catModel = new CatModel();
 	private final ModelBase dogModel = new DogModel();
