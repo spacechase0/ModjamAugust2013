@@ -124,7 +124,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		return type;
 	}
 	
-	public void setPetType( PetType theType )
+	public void setPetType( PetType  theType )
 	{
 		type = theType;
 		setSize( type.sizeX, type.sizeY );
