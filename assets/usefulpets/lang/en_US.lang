@@ -1,0 +1,4 @@
+item.converter.name=Pet Converter
+
+entity.pet.cat=Cat
+entity.pet.dog=Dog

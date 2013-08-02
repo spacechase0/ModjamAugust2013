@@ -1,6 +1,8 @@
 package com.spacechase0.minecraft.usefulpets;
 
 import com.spacechase0.minecraft.usefulpets.entity.*;
+import com.spacechase0.minecraft.usefulpets.item.*;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -10,6 +12,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraftforge.common.Configuration;
 
 @Mod( modid = "SC0_UsefulPets", name = "Useful Pets", version = "0.1" )
@@ -33,8 +36,9 @@ public class UsefulPets
 	@EventHandler
 	void init( FMLInitializationEvent event )
 	{
-		EntityRegistry.registerGlobalEntityID( PetEntity.class, "Pet", EntityRegistry.findGlobalUniqueEntityId() );
-		
+		registerItems();
+		registerEntities();
+		registerLanguage();
 		proxy.registerRenderers();
 	}
 	
@@ -44,5 +48,36 @@ public class UsefulPets
 		config.save();
 	}
 	
+	private void registerItems()
+	{
+		converter = new ConverterItem( getItemId( "converter", 0 ) );
+	}
+	
+	private void registerEntities()
+	{
+		petEntityId = EntityRegistry.findGlobalUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID( PetEntity.class, "Pet", petEntityId );
+	}
+	
+	private void registerLanguage()
+	{
+		registerLanguage( "en_US" );
+	}
+	
+	private int getItemId( String name, int itemNum )
+	{
+		return config.getItem( name, ITEM_ID_BASE + itemNum ).getInt();
+	}
+	
+	private void registerLanguage( String lang )
+	{
+		LanguageRegistry.instance().loadLocalization( "/assets/usefulpets/lang/" + lang + ".lang", lang, false );
+	}
+	
+	public ConverterItem converter;
+	
+	public int petEntityId;
+	
 	private Configuration config;
+	private static final int ITEM_ID_BASE = 38764;
 }
