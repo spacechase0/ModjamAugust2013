@@ -79,5 +79,5 @@ public class UsefulPets
 	public int petEntityId;
 	
 	private Configuration config;
-	private static final int ITEM_ID_BASE = 38764;
+	private static final int ITEM_ID_BASE = 15764;
 }
