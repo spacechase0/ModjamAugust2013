@@ -1,5 +1,6 @@
 package com.spacechase0.minecraft.usefulpets.item;
 
+import com.spacechase0.minecraft.usefulpets.entity.PetEntity;
 import com.spacechase0.minecraft.usefulpets.pet.PetType;
 
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -55,8 +56,15 @@ public class ConverterItem extends Item
 				return true;
 			}
 			
+			PetEntity pet = new PetEntity( entity.worldObj );
+			pet.posX = entity.posX;
+			pet.posY = entity.posY;
+			pet.posZ = entity.posZ;
+			pet.setOwnerName( tameable.getOwnerName() );
+			pet.setPetType( type );
+			
 			entity.worldObj.removeEntity( entity );
-			// TODO: Spawn entity
+			entity.worldObj.spawnEntityInWorld( pet );
 			
 			player.sendChatToPlayer( ChatMessageComponent.func_111077_e( "Converted!" ) );
 			return true;

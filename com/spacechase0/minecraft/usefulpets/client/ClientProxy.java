@@ -1,12 +1,15 @@
 package com.spacechase0.minecraft.usefulpets.client;
 
 import com.spacechase0.minecraft.usefulpets.CommonProxy;
+import com.spacechase0.minecraft.usefulpets.client.render.*;
+import com.spacechase0.minecraft.usefulpets.entity.*;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy
 {
 	@Override
 	public void registerRenderers()
 	{
-		// TODO
+		RenderingRegistry.registerEntityRenderingHandler( PetEntity.class, new PetEntityRenderer() );
 	}
 }
