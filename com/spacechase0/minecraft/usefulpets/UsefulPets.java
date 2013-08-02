@@ -12,7 +12,10 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 
 @Mod( modid = "SC0_UsefulPets", name = "Useful Pets", version = "0.1" )
@@ -37,6 +40,7 @@ public class UsefulPets
 	void init( FMLInitializationEvent event )
 	{
 		registerItems();
+		registerRecipes();
 		registerEntities();
 		registerLanguage();
 		proxy.registerRenderers();
@@ -51,6 +55,22 @@ public class UsefulPets
 	private void registerItems()
 	{
 		converter = new ConverterItem( getItemId( "converter", 0 ) );
+		GameRegistry.registerItem( converter, "converter" );
+	}
+	
+	private void registerRecipes()
+	{
+		GameRegistry.addRecipe( new ItemStack( converter ),
+				                "*",
+				                "|",
+				                '*', Item.goldNugget,
+				                '|', Item.bone );
+
+		GameRegistry.addRecipe( new ItemStack( converter ),
+				                " *",
+				                "| ",
+				                '*', Item.goldNugget,
+				                '|', Item.bone );
 	}
 	
 	private void registerEntities()

@@ -1,4 +1,4 @@
-item.converter.name=Pet Converter
+item.petConverter.name=Pet Converter
 
 entity.pet.cat=Cat
 entity.pet.dog=Dog
