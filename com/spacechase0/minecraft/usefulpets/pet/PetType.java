@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 public enum PetType
 {
 	CAT( "cat", EntityOcelot.class, "hitt", new int[] { Skill.HUNGER.id } ),
-	DOG( "dog", EntityWolf.class, "hurt", new int[] { Skill.HUNGER.id } );
+	DOG( "dog", EntityWolf.class, "hurt", new int[] { Skill.HUNGER.id, Skill.COMBAT.id } );
 	
 	PetType( String theName, Class toConvertFrom, String theHurtSound, int[] theDefaultSkills )
 	{

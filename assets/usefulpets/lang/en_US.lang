@@ -10,18 +10,20 @@ pet.skill.hunger.desc=Allows eating
 pet.skill.hunger.eatOther.name=Eat other foods
 pet.skill.hunger.eatOther.desc=Eat food that the other species can eat
 pet.skill.hunger.eatPlants.name=Eat plants
-pet.skill.hunger.eatPlants.desc=Alows eating plant matter
+pet.skill.hunger.eatPlants.desc=Allows eating plant matter
 pet.skill.hunger.eatProcessed.name=Eat processed
 pet.skill.hunger.eatProcessed.desc=Allows eating of process "human" food.
 pet.skill.hunger.eatGross.name=Eat gross food
 pet.skill.hunger.eatGross.desc=Allows eating of spider eyes and rotten flesh
 
 pet.skill.combat.name=Combat
-pet.skill.combat.desc=Attacking for 2 hearts
+pet.skill.combat.desc=Attacking damage of a wooden/golden sword
 pet.skill.combat.upgrade1.name=Upgrade Damage (1)
-pet.skill.combat.upgrade1.desc=Attacking for 2.5 hearts
+pet.skill.combat.upgrade1.desc=Attack damage of a stone sword
 pet.skill.combat.upgrade2.name=Upgrade Damage (2)
-pet.skill.combat.upgrade2.desc=Attacking for 3 hearts
+pet.skill.combat.upgrade2.desc=Attack damage of an iron sword
+pet.skill.combat.upgrade3.name=Upgrade Damage (3)
+pet.skill.combat.upgrade3.desc=Attack damage of a diamond sword
 
 pet.skill.repellant.name=Mob Repellant
 pet.skill.repellant.desc=Keeps creepers away

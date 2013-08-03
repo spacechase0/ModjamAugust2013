@@ -5,23 +5,35 @@ import java.util.List;
 
 import com.spacechase0.minecraft.usefulpets.UsefulPets;
 import com.spacechase0.minecraft.usefulpets.ai.FollowOwnerAI;
+import com.spacechase0.minecraft.usefulpets.ai.OwnerHurtTargetAI;
 import com.spacechase0.minecraft.usefulpets.ai.SitAI;
+import com.spacechase0.minecraft.usefulpets.ai.TargetHurtOwnerAI;
 import com.spacechase0.minecraft.usefulpets.pet.*;
+import com.spacechase0.minecraft.usefulpets.pet.skill.AttackSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.FoodSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.Skill;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILeapAtTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
+import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
 import net.minecraft.entity.ai.EntityAISit;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.AttributeInstance;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -42,9 +54,17 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		getNavigator().setAvoidsWater( true );
         tasks.addTask( 1, new EntityAISwimming( this ) );
         tasks.addTask( 2, aiSit );
+        
+        // TEMP
+        tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
+        tasks.addTask(4, new EntityAIAttackOnCollide(this, 1.0D, true));
+        
         tasks.addTask( 5, new FollowOwnerAI( this, 1.0D, 10.0F, 3.5F ) );
         tasks.addTask( 7, new EntityAIWander(this, 1.0D));
         tasks.addTask( 9, new EntityAIWatchClosest( this, EntityPlayer.class, 9.0F ) );
+        targetTasks.addTask(1, new TargetHurtOwnerAI( this ) );
+        targetTasks.addTask(2, new OwnerHurtTargetAI( this ) );
+        targetTasks.addTask(3, new EntityAIHurtByTarget( this, true ) );
 	}
 	
 	public int getLevel()
@@ -67,7 +87,6 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		dataWatcher.updateObject( DATA_FREE_POINTS, points );
 	}
 	
-	// TODO: Test me
 	public boolean hasSkill( int id )
 	{
 		return skills.contains( id );
@@ -182,6 +201,11 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		saturation = theSaturation;
 	}
 	
+	public boolean isValidTarget( EntityLivingBase target )
+	{
+		return !( target instanceof EntityCreeper );
+	}
+	
 	// Entity
     @Override
     public void writeEntityToNBT( NBTTagCompound tag)
@@ -242,6 +266,20 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     @Override
     public void onUpdate()
     {
+    	/*
+    	String s = "skills: ";
+    	for ( int id : skills )
+    	{
+    		s += id + " ";
+    	}
+    	System.out.println( s );
+    	//*/
+    	
+    	if ( !hasSkill( Skill.COMBAT.id ) )
+    	{
+    		setTarget( null );
+    	}
+    	
     	super.onUpdate();
     	
     	isDead = false;
@@ -275,6 +313,26 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     @Override
     public void setDead()
     {
+    }
+	
+	@Override
+    public boolean attackEntityFrom( DamageSource source, float damage )
+    {
+		if ( source.getEntity() == getOwner() )
+		{
+			return false;
+		}
+		
+        Entity entity = source.getEntity();
+        aiSit.setSitting( false );
+        setSitting( false );
+
+        if (entity != null && !(entity instanceof EntityPlayer) && !(entity instanceof EntityArrow))
+        {
+        	damage = (damage + 1.0F) / 2.0F;
+        }
+
+        return super.attackEntityFrom(source, damage);
     }
     
     // EntityLivingBase, EntityLiving
@@ -351,7 +409,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	}
     	
     	ItemStack held = player.getHeldItem();
-    	if ( held.getItem() instanceof ItemFood )
+    	if ( held != null && held.getItem() instanceof ItemFood )
     	{
     		ItemFood food = ( ItemFood ) held.getItem();
     		
@@ -387,6 +445,25 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	return false;
     }
 
+    @Override
+    public boolean attackEntityAsMob( Entity entity )
+    {
+    	int damage = 0;
+    	for ( int id : skills )
+    	{
+    		Skill skill = Skill.forId( id );
+    		if ( !( skill instanceof AttackSkill ) )
+    		{
+    			continue;
+    		}
+    		AttackSkill attack = ( AttackSkill ) skill;
+    		
+    		damage += attack.damage;
+    	}
+    	
+        return entity.attackEntityFrom( DamageSource.causeMobDamage( this ), (float) damage );
+    }
+
 	// EntityAnimal
 	@Override
 	public EntityAgeable createChild( EntityAgeable entity )
@@ -394,17 +471,6 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		// TODO
 		return null;
 	}
-	
-	@Override
-    public boolean attackEntityFrom( DamageSource source, float damage )
-    {
-		if ( source.getEntity() == getOwner() )
-		{
-			return false;
-		}
-		
-		return super.attackEntityFrom( source, damage );
-    }
 	
 	// EntityOwnable (+some)
 	@Override
