@@ -447,7 +447,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     @Override
     protected boolean isMovementBlocked()
     {
-        return false;
+        return isSitting();
     }
     
     @Override
