@@ -47,7 +47,7 @@ public class PetGui extends GuiScreen
 	private EntityPlayer player;
 	private PetEntity pet;
 	
-	private boolean hasReqs( Skill skill )
+	private boolean hasReqs( Skill  skill )
 	{
 		if ( skill.levelReq > pet.getLevel() )
 		{
