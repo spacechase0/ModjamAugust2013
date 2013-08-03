@@ -49,6 +49,11 @@ public class PetGui extends GuiScreen
 	
 	private boolean hasReqs( Skill skill )
 	{
+		if ( skill.levelReq > pet.getLevel() )
+		{
+			return false;
+		}
+		
 		if ( skill.skillReqs == null )
 		{
 			return true;
@@ -385,7 +390,7 @@ public class PetGui extends GuiScreen
                 j4 = ( int )( parent.x * 24 - k + 11 + k1 );
                 l3 = ( int )( parent.y * 24 - l + 11 + l1 );
                 boolean flag5 = pet.hasSkill( skill.id );
-                boolean flag6 = pet.hasSkill( parent.id );
+                boolean flag6 = hasReqs( skill );
                 i4 = Math.sin((double)(Minecraft.getSystemTime() % 600L) / 600.0D * Math.PI * 2.0D) > 0.6D ? 255 : 130;
                 int k4 = -16777216;
 
@@ -460,7 +465,7 @@ public class PetGui extends GuiScreen
 
                 GL11.glEnable(GL11.GL_LIGHTING);
                 GL11.glEnable(GL11.GL_CULL_FACE);
-                renderitem.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.func_110434_K(), new ItemStack( Item.stick ) /*achievement2.theItemStack*/, i5 + 3, l4 + 3);
+                renderitem.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.func_110434_K(), achievement2.icon, i5 + 3, l4 + 3);
                 GL11.glDisable(GL11.GL_LIGHTING);
 
                 if (!hasReqs(achievement2))
@@ -509,7 +514,7 @@ public class PetGui extends GuiScreen
                 this.drawGradientRect(j4 - 3, l3 - 3, j4 + i5 + 3, l3 + l4 + 3 + 12, -1073741824, -1073741824);
                 this.fontRenderer.drawSplitString(s1, j4, l3 + 12, i5, -6250336);
 
-                if (pet.hasSkill(achievement1.id ))
+                if (pet.hasSkill(achievement1.id))
                 {
                     this.fontRenderer.drawStringWithShadow(I18n.func_135053_a("achievement.taken"), j4, l3 + l4 + 4, -7302913);
                 }
@@ -517,12 +522,12 @@ public class PetGui extends GuiScreen
             else
             {
                 i5 = Math.max(this.fontRenderer.getStringWidth(s), 120);
-                String s2;
+                String s2 = new String();
                 for ( int id : achievement1.skillReqs )
                 {
                 	String name = StatCollector.translateToLocal( "pet.skill." + Skill.forId( id ).name + ".name" );
-                	s2 += I18n.func_135052_a("achievement.requires", new Object[] {I18n.func_135053_a(name)});
-                	s2 += "\n";
+                	s2.concat( I18n.func_135052_a("achievement.requires", new Object[] {I18n.func_135053_a(name)}) );
+                	s2.concat( "\n" );
                 }
                 i4 = this.fontRenderer.splitStringWidth(s2, i5);
                 this.drawGradientRect(j4 - 3, l3 - 3, j4 + i5 + 3, l3 + i4 + 12 + 3, -1073741824, -1073741824);
