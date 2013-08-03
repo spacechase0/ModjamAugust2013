@@ -3,6 +3,7 @@ package com.spacechase0.minecraft.usefulpets.pet.skill;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -58,4 +59,9 @@ public class Skill
 	public static Skill COMBAT_UPGRADE1 = new AttackSkill( 6, "upgrade1", 1, new ItemStack( Item.swordStone ) );
 	public static Skill COMBAT_UPGRADE2 = new AttackSkill( 7, "upgrade2", 5, 1, new ItemStack( Item.swordIron ) );
 	public static Skill COMBAT_UPGRADE3 = new AttackSkill( 8, "upgrade3", 10, 1, new ItemStack( Item.swordDiamond ) );
+
+	public static Skill REPELLANT = new RepellantSkill( 9, "", new ItemStack( Item.skull, 1, 4 ) );
+	public static Skill REPELLANT_RADIUS = new RepellantSkill( 10, "larger", 12, 10.f, new ItemStack( Item.stick ) );
+	public static Skill REPELLANT_UNDEAD = new RepellantSkill( 11, "undead", 7, EnumCreatureAttribute.UNDEAD, new ItemStack( Item.skull, 1, 0 ) );
+	public static Skill REPELLANT_SPIDERS = new RepellantSkill( 12, "spiders", 7, EnumCreatureAttribute.ARTHROPOD, new ItemStack( Item.spiderEye ) );
 }

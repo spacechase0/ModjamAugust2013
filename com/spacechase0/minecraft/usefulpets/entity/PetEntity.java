@@ -352,7 +352,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	{
     		if ( getHunger() >= MAX_HUNGER / 2 && func_110143_aJ() < func_110138_aP() )
     		{
-    			if ( ++regenTicks == 35 )
+    			if ( ++regenTicks >= 35 )
     			{
     				setEntityHealth( func_110143_aJ() + 1 );
     				useHunger( 0.25f );

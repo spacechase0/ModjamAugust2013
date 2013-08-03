@@ -30,7 +30,7 @@ public class AttackSkill extends Skill
 	
 	private static float getPosX( int id, String name )
 	{
-		return 5.f;
+		return 0.f;
 	}
 	
 	private static float getPosY( int id, String name )

@@ -29,14 +29,15 @@ public class FoodSkill extends Skill
 	
 	private static float getPosX( int id, String name )
 	{
+		float base = -3;
 		if ( name.equals( "" ) )
 		{
-			return 2;
+			return base;
 		}
 		
 		int diff = id - ( mainId + 1 );
 		
-		return 2 - 1.f + ( ( diff % 2 ) * 2.f );
+		return base - 1.f + ( ( diff % 2 ) * 2.f );
 	}
 	
 	private static float getPosY( int id, String name )

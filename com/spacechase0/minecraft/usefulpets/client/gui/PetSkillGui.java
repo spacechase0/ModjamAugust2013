@@ -35,9 +35,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.AchievementPage;
 
 // Based off of GuiAchievements
-public class PetGui extends GuiScreen
+public class PetSkillGui extends GuiScreen
 {
-	public PetGui( EntityPlayer thePlayer, PetEntity thePet )
+	public PetSkillGui( EntityPlayer thePlayer, PetEntity thePet )
 	{
 		super();
 		

@@ -1,7 +1,7 @@
 package com.spacechase0.minecraft.usefulpets;
 
 import com.spacechase0.minecraft.usefulpets.client.ClientProxy;
-import com.spacechase0.minecraft.usefulpets.client.gui.PetGui;
+import com.spacechase0.minecraft.usefulpets.client.gui.PetSkillGui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -23,7 +23,7 @@ public class GuiHandler implements IGuiHandler
 		if ( id == UsefulPets.PET_GUI_ID )
 		{
 			int entityId = x;
-			return new PetGui( player, ClientProxy.pendingPetForGui );
+			return new PetSkillGui( player, ClientProxy.pendingPetForGui );
 		}
 		
 		return null;
