@@ -1,6 +1,7 @@
 package com.spacechase0.minecraft.usefulpets.ai;
 
 import com.spacechase0.minecraft.usefulpets.entity.PetEntity;
+import com.spacechase0.minecraft.usefulpets.pet.skill.Skill;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
@@ -24,6 +25,11 @@ public class OwnerHurtTargetAI extends EntityAITarget
      */
     public boolean shouldExecute()
     {
+    	if ( !theEntityTameable.hasSkill( Skill.COMBAT.id ) )
+    	{
+    		return false;
+    	}
+    	
         if ( false )
         {
             return false;

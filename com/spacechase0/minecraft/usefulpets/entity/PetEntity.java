@@ -141,7 +141,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 					int reqId = skill.skillReqs[ i ];
 					if ( reqId == id )
 					{
-						removeSkill(  skill.id );
+						removeSkill( skill.id );
 						break;
 					}
 				}
