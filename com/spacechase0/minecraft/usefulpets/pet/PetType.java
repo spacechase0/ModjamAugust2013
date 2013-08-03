@@ -57,6 +57,14 @@ public enum PetType
 	
 	private final String hurtSound;
 	
+	public static final Map< String, PetType > types = new HashMap< String, PetType >();
+	private static final Random rand = new Random();
+	
+	public static PetType forName( String name )
+	{
+		return types.get( name );
+	}
+	
 	static
 	{
 		CAT.defaultFoodChoices.add( new ItemStack( Item.fishRaw ) );
@@ -68,18 +76,7 @@ public enum PetType
 		DOG.defaultFoodChoices.add( new ItemStack( Item.porkCooked ) );
 		DOG.defaultFoodChoices.add( new ItemStack( Item.beefRaw ) );
 		DOG.defaultFoodChoices.add( new ItemStack( Item.beefCooked ) );
-	}
-	
-	public static final Map< String, PetType > types = new HashMap< String, PetType >();
-	private static final Random rand = new Random();
-	
-	public static PetType forName( String name )
-	{
-		return types.get( name );
-	}
-	
-	static
-	{
+		
 		types.put( CAT.name, CAT );
 		types.put( DOG.name, DOG );
 	}
