@@ -42,7 +42,7 @@ public class AttackSkill extends Skill
 		
 		int diff = id - ( mainId + 1 );
 		
-		return 1.1f + ( diff * 1.1f );
+		return 1.2f + ( diff * 1.2f );
 	}
 	
 	public final int damage;

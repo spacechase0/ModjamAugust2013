@@ -521,14 +521,24 @@ public class PetGui extends GuiScreen
             }
             else
             {
-                i5 = Math.max(this.fontRenderer.getStringWidth(s), 120);
+                i5 = fontRenderer.getStringWidth(s);//Math.max(this.fontRenderer.getStringWidth(s), 120);
                 String s2 = new String();
+                if ( pet.getLevel() < achievement1.levelReq )
+                {
+                	String levelReq = StatCollector.translateToLocal( "pet.level.req" ) + " " + achievement1.levelReq + "\n";
+                	s2 += levelReq;
+                }
                 for ( int id : achievement1.skillReqs )
                 {
+                	if ( pet.hasSkill( id ) )
+                	{
+                		continue;
+                	}
+                	
                 	String name = StatCollector.translateToLocal( "pet.skill." + Skill.forId( id ).name + ".name" );
-                	s2.concat( I18n.func_135052_a("achievement.requires", new Object[] {I18n.func_135053_a(name)}) );
-                	s2.concat( "\n" );
+                	s2 += StatCollector.translateToLocal( "pet.skill.req" ) + " " + name + "\n";
                 }
+                i5 = Math.max( i5, fontRenderer.getStringWidth( s2 ) );
                 i4 = this.fontRenderer.splitStringWidth(s2, i5);
                 this.drawGradientRect(j4 - 3, l3 - 3, j4 + i5 + 3, l3 + i4 + 12 + 3, -1073741824, -1073741824);
                 this.fontRenderer.drawSplitString(s2, j4, l3 + 12, i5, -9416624);

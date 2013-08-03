@@ -4,6 +4,7 @@ entity.pet.cat=Cat
 entity.pet.dog=Dog
 
 pet.skill.req=Requires
+pet.level.req=Requires Level
 
 pet.skill.hunger.name=Hunger
 pet.skill.hunger.desc=Allows eating

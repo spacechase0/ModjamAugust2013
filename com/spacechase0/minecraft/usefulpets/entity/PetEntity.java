@@ -131,6 +131,11 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	
 	private ItemStack getSkillsStack()
 	{
+		if ( skills == null || skills.size() == 0 )
+		{
+			return new ItemStack( Item.arrow );
+		}
+		
 		int[] theSkills = new int[ skills.size() ];
 		for ( int i = 0; i < skills.size(); ++i )
 		{
@@ -286,12 +291,15 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     public void onUpdate()
     {
     	/*
-    	String s = "skills: ";
-    	for ( int id : skills )
+    	if(worldObj.isRemote)
     	{
-    		s += id + " ";
+	    	String s = "skills: ";
+	    	for ( int id : skills )
+	    	{
+	    		s += id + " ";
+	    	}
+	    	System.out.println( s );
     	}
-    	System.out.println( s );
     	//*/
     	
     	if ( !hasSkill( Skill.COMBAT.id ) )
@@ -309,13 +317,23 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     		setPosition( posX, -4.f, posZ );
     	}
     	
-    	if ( worldObj.isRemote && ++syncTimer == 20 )
+    	if ( worldObj.isRemote && ++syncTimer >= 20 )
     	{
     		ownerName = dataWatcher.getWatchableObjectString( DATA_OWNER );
         	type = PetType.forName( dataWatcher.getWatchableObjectString( DATA_TYPE ) );
-        	
+
         	skills.clear();
-        	int[] newSkills = dataWatcher.getWatchableObjectItemStack( DATA_SKILLS ).getTagCompound().getIntArray( "Skills" );
+        	ItemStack skillStack = dataWatcher.getWatchableObjectItemStack( DATA_SKILLS );
+        	if ( skillStack.itemID == Item.stick.itemID )
+        	{
+            	int[] newSkills = skillStack.getTagCompound().getIntArray( "Skills" );
+            	for ( int id : newSkills )
+            	{
+            		skills.add( id );
+            	}
+        	}
+        	
+        	syncTimer = 0;
     	}
     	else
     	{
