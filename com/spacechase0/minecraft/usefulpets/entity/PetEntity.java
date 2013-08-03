@@ -89,6 +89,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	
 	public boolean hasSkill( int id )
 	{
+		//System.out.println("has: "+id+" "+skills.contains(id));
 		return skills.contains( id );
 	}
 	
@@ -102,6 +103,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		
 		skills.add( id );
 		setFreeSkillPoints( getFreeSkillPoints() - 1 );
+		dataWatcher.updateObject( DATA_SKILLS, getSkillsStack() );
 	}
 	
 	// TODO: Test me
@@ -124,6 +126,22 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 			skills.remove( id );
 			setFreeSkillPoints( getFreeSkillPoints() + 1 );
 		}
+		dataWatcher.updateObject( DATA_SKILLS, getSkillsStack() );
+	}
+	
+	private ItemStack getSkillsStack()
+	{
+		int[] theSkills = new int[ skills.size() ];
+		for ( int i = 0; i < skills.size(); ++i )
+		{
+			theSkills[ i ] = skills.get( i );
+		}
+		
+		ItemStack stack = new ItemStack( Item.stick );
+		stack.setTagCompound( new NBTTagCompound() );
+		stack.getTagCompound().setIntArray( "Skills", theSkills );
+		
+		return stack;
 	}
 	
 	// TODO: Test me
@@ -150,6 +168,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		skills.clear();
 		skills.addAll( type.defaultSkills );
 		dataWatcher.updateObject( DATA_TYPE, type.name );
+		dataWatcher.updateObject( DATA_SKILLS, getSkillsStack() );
 	}
 	
 	public boolean isSitting()
@@ -260,7 +279,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         dataWatcher.addObject( DATA_HUNGER, 20.f );
         dataWatcher.addObject( DATA_LEVEL, 1 );
         dataWatcher.addObject( DATA_FREE_POINTS, 1 );
-        dataWatcher.addObject( DATA_SKILLS, new ItemStack( Item.stick ) );
+        dataWatcher.addObject( DATA_SKILLS, getSkillsStack() );
     }
     
     @Override
@@ -295,6 +314,8 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     		ownerName = dataWatcher.getWatchableObjectString( DATA_OWNER );
         	type = PetType.forName( dataWatcher.getWatchableObjectString( DATA_TYPE ) );
         	
+        	skills.clear();
+        	int[] newSkills = dataWatcher.getWatchableObjectItemStack( DATA_SKILLS ).getTagCompound().getIntArray( "Skills" );
     	}
     	else
     	{
