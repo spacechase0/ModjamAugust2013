@@ -50,12 +50,12 @@ public class Skill
 	
 	public static Skill HUNGER = new FoodSkill( 0, "", FoodType.SPECIES, new ItemStack( Item.porkRaw ) );
 	public static Skill HUNGER_OTHER = new FoodSkill( 1, "eatOther", FoodType.OTHER_SPECIES, new ItemStack( Item.fishRaw ) );
-	public static Skill HUNGER_PLANTS = new FoodSkill( 2, "eatPlants", 3, FoodType.PLANTS, new ItemStack( Item.carrot ) );
-	public static Skill HUNGER_PROCESSED = new FoodSkill( 3, "eatProcessed", 3, FoodType.PROCESSED, new ItemStack( Item.cookie ) );
+	public static Skill HUNGER_PLANTS = new FoodSkill( 2, "eatPlants", FoodType.PLANTS, new ItemStack( Item.carrot ) );
+	public static Skill HUNGER_PROCESSED = new FoodSkill( 3, "eatProcessed", 5, FoodType.PROCESSED, new ItemStack( Item.cookie ) );
 	public static Skill HUNGER_GROSS = new FoodSkill( 4, "eatGross", 10, FoodType.GROSS, new ItemStack( Item.rottenFlesh ) );
 
 	public static Skill COMBAT = new AttackSkill( 5, "", 4, new ItemStack( Item.swordWood ) );
-	public static Skill COMBAT_UPGRADE1 = new AttackSkill( 6, "upgrade1", 3, 1, new ItemStack( Item.swordStone ) );
+	public static Skill COMBAT_UPGRADE1 = new AttackSkill( 6, "upgrade1", 1, new ItemStack( Item.swordStone ) );
 	public static Skill COMBAT_UPGRADE2 = new AttackSkill( 7, "upgrade2", 5, 1, new ItemStack( Item.swordIron ) );
 	public static Skill COMBAT_UPGRADE3 = new AttackSkill( 8, "upgrade3", 10, 1, new ItemStack( Item.swordDiamond ) );
 }

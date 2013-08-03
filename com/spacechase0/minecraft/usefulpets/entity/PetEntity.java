@@ -118,7 +118,6 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		return true;
 	}
 	
-	// TODO: Test me
 	public void addSkill( int id )
 	{
 		if ( hasSkill( id ) || getFreeSkillPoints() < 1 || !hasSkillRequirements( id ) )
@@ -292,6 +291,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         {
         	skills.add( id );
         }
+        dataWatcher.updateObject( DATA_SKILLS, getSkillsStack() );
         
         setSitting( tag.getBoolean( "Sitting" ) );
         setHunger( tag.getFloat( "Hunger" ) );
@@ -315,18 +315,6 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     @Override
     public void onUpdate()
     {
-    	/*
-    	if(worldObj.isRemote)
-    	{
-	    	String s = "skills: ";
-	    	for ( int id : skills )
-	    	{
-	    		s += id + " ";
-	    	}
-	    	System.out.println( s );
-    	}
-    	//*/
-    	
     	if ( !hasSkill( Skill.COMBAT.id ) )
     	{
     		setTarget( null );
@@ -469,6 +457,11 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	{
     		UsefulPets.proxy.setPendingPetForGui( this );
     		player.openGui( UsefulPets.instance, UsefulPets.PET_GUI_ID, worldObj, 0, 0, 0 );
+    		return false;
+    	}
+    	
+    	if ( worldObj.isRemote )
+    	{
     		return false;
     	}
     	
