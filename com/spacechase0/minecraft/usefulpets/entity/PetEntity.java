@@ -93,10 +93,35 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		return skills.contains( id );
 	}
 	
+	public boolean hasSkillRequirements( int skillId )
+	{
+		Skill skill = Skill.forId( skillId );
+		if ( skill.levelReq > getLevel() )
+		{
+			return false;
+		}
+		
+		if ( skill.skillReqs == null )
+		{
+			return true;
+		}
+		
+		for ( int is = 0; is < skill.skillReqs.length; ++is )
+		{
+			Skill parent = Skill.forId( skill.skillReqs[ is ] );
+			if ( !hasSkill( parent.id ) )
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	// TODO: Test me
 	public void addSkill( int id )
 	{
-		if ( hasSkill( id ) || getFreeSkillPoints() < 1 )
+		if ( hasSkill( id ) || getFreeSkillPoints() < 1 || !hasSkillRequirements( id ) )
 		{
 			return;
 		}

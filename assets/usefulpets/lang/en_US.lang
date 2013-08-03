@@ -3,8 +3,11 @@ item.petConverter.name=Pet Converter
 entity.pet.cat=Cat
 entity.pet.dog=Dog
 
-pet.skill.req=Requires
-pet.level.req=Requires Level
+gui.pet.title=Pet Skills
+gui.pet.level=Level
+gui.pet.freePoints=Free Points
+gui.pet.skillReq=Requires
+gui.pet.levelReq=Requires Level
 
 pet.skill.hunger.name=Hunger
 pet.skill.hunger.desc=Allows eating

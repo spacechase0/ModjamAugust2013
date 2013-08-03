@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.spacechase0.minecraft.usefulpets.entity.PetEntity;
+import com.spacechase0.minecraft.usefulpets.network.ChangeSkillPacket;
 import com.spacechase0.minecraft.usefulpets.pet.skill.Skill;
 
 import net.minecraft.block.Block;
@@ -47,29 +48,13 @@ public class PetGui extends GuiScreen
 	private EntityPlayer player;
 	private PetEntity pet;
 	
-	private boolean hasReqs( Skill skill )
-	{
-		if ( skill.levelReq > pet.getLevel() )
-		{
-			return false;
-		}
-		
-		if ( skill.skillReqs == null )
-		{
-			return true;
-		}
-		
-		for ( int is = 0; is < skill.skillReqs.length; ++is )
-		{
-			Skill parent = Skill.forId( skill.skillReqs[ is ] );
-			if ( !hasReqs( parent ) )
-			{
-				return false;
-			}
-		}
-		
-		return true;
-	}
+	private int clicked = -1;
+    
+    @Override
+    protected void mouseClicked(int x, int y, int button)
+    {
+    	clicked = button;
+    }
 	
 	// Start GuiAchievement stuff
     private static final int guiMapTop = AchievementList.minDisplayColumn * 24 - 112;
@@ -261,7 +246,12 @@ public class PetGui extends GuiScreen
     {
         int i = (this.width - this.achievementsPaneWidth) / 2;
         int j = (this.height - this.achievementsPaneHeight) / 2;
-        this.fontRenderer.drawString("Pet Skills", i + 15, j + 5, 4210752);
+        this.fontRenderer.drawString(StatCollector.translateToLocal("gui.pet.title"), i + 15, j + 5, 4210752);
+
+        //this.buttonList.add(new GuiSmallButton(1, this.width / 2 + 24, this.height / 2 + 74, 80, 20, I18n.func_135053_a("gui.done")));
+        //this.buttonList.add(button = new GuiSmallButton(2, (width - achievementsPaneWidth) / 2 + 24, height / 2 + 74, 125, 20, AchievementPage.getTitle(currentPage)));
+        fontRenderer.drawString( StatCollector.translateToLocal("gui.pet.level") + " " + pet.getLevel(), (width - achievementsPaneWidth) / 2 + 24, height / 2 + 74 + 16, 4210752);
+        fontRenderer.drawString( StatCollector.translateToLocal("gui.pet.freePoints") + ": " + pet.getFreeSkillPoints(), this.width / 2 + 24, this.height / 2 + 74 + 16, 4210752);
     }
 
     protected void genAchievementBackground(int par1, int par2, float par3)
@@ -390,7 +380,7 @@ public class PetGui extends GuiScreen
                 j4 = ( int )( parent.x * 24 - k + 11 + k1 );
                 l3 = ( int )( parent.y * 24 - l + 11 + l1 );
                 boolean flag5 = pet.hasSkill( skill.id );
-                boolean flag6 = hasReqs( skill );
+                boolean flag6 = pet.hasSkillRequirements( skill.id );
                 i4 = Math.sin((double)(Minecraft.getSystemTime() % 600L) / 600.0D * Math.PI * 2.0D) > 0.6D ? 255 : 130;
                 int k4 = -16777216;
 
@@ -408,7 +398,7 @@ public class PetGui extends GuiScreen
             }
         }
 
-        Skill achievement1 = null;
+        Skill hoveredSkill = null;
         RenderItem renderitem = new RenderItem();
         RenderHelper.enableGUIStandardItemLighting();
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -432,7 +422,7 @@ public class PetGui extends GuiScreen
                     f2 = 1.0F;
                     GL11.glColor4f(f2, f2, f2, 1.0F);
                 }
-                else if (hasReqs(achievement2))
+                else if (pet.hasSkillRequirements(achievement2.id))
                 {
                     f2 = Math.sin((double)(Minecraft.getSystemTime() % 600L) / 600.0D * Math.PI * 2.0D) < 0.6D ? 0.6F : 0.8F;
                     GL11.glColor4f(f2, f2, f2, 1.0F);
@@ -456,7 +446,7 @@ public class PetGui extends GuiScreen
                     this.drawTexturedModalRect(i5 - 2, l4 - 2, 0, 202, 26, 26);
                 }
 
-                if (!hasReqs(achievement2))
+                if (!pet.hasSkillRequirements(achievement2.id))
                 {
                     float f3 = 0.1F;
                     GL11.glColor4f(f3, f3, f3, 1.0F);
@@ -468,7 +458,7 @@ public class PetGui extends GuiScreen
                 renderitem.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.func_110434_K(), achievement2.icon, i5 + 3, l4 + 3);
                 GL11.glDisable(GL11.GL_LIGHTING);
 
-                if (!hasReqs(achievement2))
+                if (!pet.hasSkillRequirements(achievement2.id))
                 {
                     renderitem.renderWithColor = true;
                 }
@@ -477,7 +467,7 @@ public class PetGui extends GuiScreen
 
                 if (par1 >= k1 && par2 >= l1 && par1 < k1 + 224 && par2 < l1 + 155 && par1 >= i5 && par1 <= i5 + 22 && par2 >= l4 && par2 <= l4 + 22)
                 {
-                    achievement1 = achievement2;
+                    hoveredSkill = achievement2;
                 }
             }
         }
@@ -494,19 +484,19 @@ public class PetGui extends GuiScreen
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         super.drawScreen(par1, par2, par3);
 
-        if (achievement1 != null)
+        if (hoveredSkill != null)
         {
-            String s = StatCollector.translateToLocal( "pet.skill." + achievement1.name + ".name" );
-            String s1 = StatCollector.translateToLocal( "pet.skill." + achievement1.name + ".desc");
+            String s = StatCollector.translateToLocal( "pet.skill." + hoveredSkill.name + ".name" );
+            String s1 = StatCollector.translateToLocal( "pet.skill." + hoveredSkill.name + ".desc");
             j4 = par1 + 12;
             l3 = par2 - 4;
 
-            if (hasReqs(achievement1))
+            if (pet.hasSkillRequirements(hoveredSkill.id))
             {
                 i5 = Math.max(this.fontRenderer.getStringWidth(s), 120);
                 l4 = this.fontRenderer.splitStringWidth(s1, i5);
 
-                if (pet.hasSkill(achievement1.id))
+                if (pet.hasSkill(hoveredSkill.id))
                 {
                     l4 += 12;
                 }
@@ -514,21 +504,34 @@ public class PetGui extends GuiScreen
                 this.drawGradientRect(j4 - 3, l3 - 3, j4 + i5 + 3, l3 + l4 + 3 + 12, -1073741824, -1073741824);
                 this.fontRenderer.drawSplitString(s1, j4, l3 + 12, i5, -6250336);
 
-                if (pet.hasSkill(achievement1.id))
+                if (pet.hasSkill(hoveredSkill.id))
                 {
                     this.fontRenderer.drawStringWithShadow(I18n.func_135053_a("achievement.taken"), j4, l3 + l4 + 4, -7302913);
+                    if ( clicked == 1 )
+                    {
+                    	pet.removeSkill( hoveredSkill.id );
+                    	mc.getNetHandler().addToSendQueue( new ChangeSkillPacket( pet.entityId, ChangeSkillPacket.ACTION_REMOVE, hoveredSkill.id ).getData() );
+                    }
+                }
+                else
+                {
+                	if ( clicked == 0 && pet.getFreeSkillPoints() > 0 )
+                	{
+                    	pet.addSkill( hoveredSkill.id );
+                    	mc.getNetHandler().addToSendQueue( new ChangeSkillPacket( pet.entityId, ChangeSkillPacket.ACTION_ADD, hoveredSkill.id ).getData() );
+                	}
                 }
             }
             else
             {
                 i5 = fontRenderer.getStringWidth(s);//Math.max(this.fontRenderer.getStringWidth(s), 120);
                 String s2 = new String();
-                if ( pet.getLevel() < achievement1.levelReq )
+                if ( pet.getLevel() < hoveredSkill.levelReq )
                 {
-                	String levelReq = StatCollector.translateToLocal( "pet.level.req" ) + " " + achievement1.levelReq + "\n";
+                	String levelReq = StatCollector.translateToLocal( "gui.pet.levelReq" ) + " " + hoveredSkill.levelReq + "\n";
                 	s2 += levelReq;
                 }
-                for ( int id : achievement1.skillReqs )
+                for ( int id : hoveredSkill.skillReqs )
                 {
                 	if ( pet.hasSkill( id ) )
                 	{
@@ -536,7 +539,7 @@ public class PetGui extends GuiScreen
                 	}
                 	
                 	String name = StatCollector.translateToLocal( "pet.skill." + Skill.forId( id ).name + ".name" );
-                	s2 += StatCollector.translateToLocal( "pet.skill.req" ) + " " + name + "\n";
+                	s2 += StatCollector.translateToLocal( "gui.pet.skillReq" ) + " " + name + "\n";
                 }
                 i5 = Math.max( i5, fontRenderer.getStringWidth( s2 ) );
                 i4 = this.fontRenderer.splitStringWidth(s2, i5);
@@ -544,12 +547,14 @@ public class PetGui extends GuiScreen
                 this.fontRenderer.drawSplitString(s2, j4, l3 + 12, i5, -9416624);
             }
 
-            this.fontRenderer.drawStringWithShadow(s, j4, l3, hasReqs(achievement1) ? (achievement1.skillReqs == null ? -128 : -1) : (achievement1.skillReqs == null ? -8355776 : -8355712));
+            this.fontRenderer.drawStringWithShadow(s, j4, l3, pet.hasSkillRequirements(hoveredSkill.id) ? (hoveredSkill.skillReqs == null ? -128 : -1) : (hoveredSkill.skillReqs == null ? -8355776 : -8355712));
         }
 
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_LIGHTING);
         RenderHelper.disableStandardItemLighting();
+        
+        clicked = -1;
     }
 
     /**

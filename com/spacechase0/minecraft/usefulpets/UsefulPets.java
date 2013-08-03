@@ -2,6 +2,7 @@ package com.spacechase0.minecraft.usefulpets;
 
 import com.spacechase0.minecraft.usefulpets.entity.*;
 import com.spacechase0.minecraft.usefulpets.item.*;
+import com.spacechase0.minecraft.usefulpets.network.PacketHandler;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -46,6 +47,7 @@ public class UsefulPets
 		registerLanguage();
 		proxy.registerRenderers();
 		
+		NetworkRegistry.instance().registerChannel( new PacketHandler(), "SC0_UP|CS" );
 		NetworkRegistry.instance().registerGuiHandler( this, new GuiHandler() );
 	}
 	
