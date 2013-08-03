@@ -509,7 +509,7 @@ public class PetGui extends GuiScreen
                 this.drawGradientRect(j4 - 3, l3 - 3, j4 + i5 + 3, l3 + l4 + 3 + 12, -1073741824, -1073741824);
                 this.fontRenderer.drawSplitString(s1, j4, l3 + 12, i5, -6250336);
 
-                if (pet.hasSkill(achievement1.id))
+                if (pet.hasSkill(achievement1.id ))
                 {
                     this.fontRenderer.drawStringWithShadow(I18n.func_135053_a("achievement.taken"), j4, l3 + l4 + 4, -7302913);
                 }
