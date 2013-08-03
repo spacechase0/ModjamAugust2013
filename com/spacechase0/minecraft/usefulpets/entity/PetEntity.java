@@ -146,7 +146,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 					}
 				}
 			}
-			System.out.println("removing "+id);
+			
 			skills.remove( new Integer( id ) );
 			setFreeSkillPoints( getFreeSkillPoints() + 1 );
 		}
