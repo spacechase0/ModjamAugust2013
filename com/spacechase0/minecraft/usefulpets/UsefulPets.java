@@ -19,6 +19,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 
 @Mod( modid = "SC0_UsefulPets", name = "Useful Pets", version = "0.1" )
 @NetworkMod( clientSideRequired = true, serverSideRequired = false )
@@ -49,6 +50,8 @@ public class UsefulPets
 		
 		NetworkRegistry.instance().registerChannel( new PacketHandler(), "SC0_UP|CS" );
 		NetworkRegistry.instance().registerGuiHandler( this, new GuiHandler() );
+		
+		MinecraftForge.EVENT_BUS.register( avoidanceHandler = new AvoidanceEventHandler() );
 	}
 	
 	@EventHandler
@@ -102,6 +105,8 @@ public class UsefulPets
 	public ConverterItem converter;
 	
 	public int petEntityId;
+	
+	public AvoidanceEventHandler avoidanceHandler;
 	
 	private Configuration config;
 	private static final int ITEM_ID_BASE = 15764;
