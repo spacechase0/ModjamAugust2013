@@ -252,7 +252,7 @@ public class PetGui extends GuiScreen
         //this.buttonList.add(button = new GuiSmallButton(2, (width - achievementsPaneWidth) / 2 + 24, height / 2 + 74, 125, 20, AchievementPage.getTitle(currentPage)));
         fontRenderer.drawString( StatCollector.translateToLocal("gui.pet.level") + " " + pet.getLevel(), (width - achievementsPaneWidth) / 2 + 24, height / 2 + 74 + 8, 4210752);
         fontRenderer.drawString( StatCollector.translateToLocal("gui.pet.freePoints") + ": " + pet.getFreeSkillPoints(), this.width / 2 + 24, this.height / 2 + 74 + 8, 4210752);
-        fontRenderer.drawString( "id:"+pet.entityId, (width - achievementsPaneWidth) / 2 + 24, height / 2 + 74 + 16, 4210752);
+        //fontRenderer.drawString( "id:"+pet.entityId, (width - achievementsPaneWidth) / 2 + 24, height / 2 + 74 + 16, 4210752);
     }
 
     protected void genAchievementBackground(int par1, int par2, float par3)

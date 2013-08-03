@@ -130,24 +130,24 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		dataWatcher.updateObject( DATA_SKILLS, getSkillsStack() );
 	}
 	
-	// TODO: Test me
 	public void removeSkill( int id )
 	{
 		if ( hasSkill( id ) && !type.defaultSkills.contains( id ) )
 		{
-			for ( int sid : Skill.skills.keySet() )
+			for ( Skill skill : Skill.skills.values() )
 			{
-				for ( int reqId : Skill.forId( sid ).skillReqs )
+				for ( int i = 0; skill.skillReqs != null && i < skill.skillReqs.length; ++i )
 				{
+					int reqId = skill.skillReqs[ i ];
 					if ( reqId == id )
 					{
-						removeSkill( sid );
+						removeSkill( skill.id );
 						break;
 					}
 				}
 			}
-			
-			skills.remove( id );
+			System.out.println("removing "+id);
+			skills.remove( new Integer( id ) );
 			setFreeSkillPoints( getFreeSkillPoints() + 1 );
 		}
 		dataWatcher.updateObject( DATA_SKILLS, getSkillsStack() );
