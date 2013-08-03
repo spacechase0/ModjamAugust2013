@@ -61,7 +61,7 @@ public class Skill
 	public static Skill COMBAT_UPGRADE3 = new AttackSkill( 8, "upgrade3", 10, 1, new ItemStack( Item.swordDiamond ) );
 
 	public static Skill REPELLANT = new RepellantSkill( 9, "", new ItemStack( Item.skull, 1, 4 ) );
-	public static Skill REPELLANT_RADIUS = new RepellantSkill( 10, "larger", 1, 4.f, new ItemStack( Item.stick ) );
-	public static Skill REPELLANT_UNDEAD = new RepellantSkill( 11, "undead", 7, EnumCreatureAttribute.UNDEAD, new ItemStack( Item.skull, 1, 0 ) );
-	public static Skill REPELLANT_SPIDERS = new RepellantSkill( 12, "spiders", 7, EnumCreatureAttribute.ARTHROPOD, new ItemStack( Item.spiderEye ) );
+	public static Skill REPELLANT_RADIUS = new RepellantSkill( 10, "larger", 10, 4.f, new ItemStack( Item.stick ) );
+	public static Skill REPELLANT_UNDEAD = new RepellantSkill( 11, "undead", 6, EnumCreatureAttribute.UNDEAD, new ItemStack( Item.skull, 1, 0 ) );
+	public static Skill REPELLANT_SPIDERS = new RepellantSkill( 12, "spiders", 3, EnumCreatureAttribute.ARTHROPOD, new ItemStack( Item.spiderEye ) );
 }
