@@ -14,6 +14,7 @@ import com.spacechase0.minecraft.usefulpets.pet.skill.AttackSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.DefenseSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.FoodSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.Skill;
+import com.spacechase0.minecraft.usefulpets.pet.skill.SpeedSkill;
 
 import cpw.mods.fml.relauncher.Side;
 
@@ -174,6 +175,24 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		stack.getTagCompound().setIntArray( "Skills", theSkills );
 		
 		return stack;
+	}
+	
+	private void updateSpeed()
+	{
+		AttributeInstance attr = func_110148_a( SharedMonsterAttributes.field_111263_d );
+		
+		float percent = 1.f;
+		for ( Skill skill : Skill.skills.values() )
+		{
+			if ( !hasSkill( skill.id ) || !( skill instanceof SpeedSkill ) )
+			{
+				continue;
+			}
+			SpeedSkill speed = ( SpeedSkill ) skill;
+			percent += speed.percent;
+		}
+		
+		attr.func_111128_a( 0.3 * percent );
 	}
 	
 	// TODO: Test me
@@ -358,6 +377,8 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	{
     		setTarget( null );
     	}
+    	
+    	updateSpeed();
     	
     	super.onUpdate();
     	
