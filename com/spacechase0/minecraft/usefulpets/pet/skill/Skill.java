@@ -79,4 +79,8 @@ public class Skill
 	public static Skill DEFENSE_FIRE = new DefenseSkill( 22, "fire", 7, new String[] { "inFire", "onFire", "lava" }, new ItemStack( Block.fire ) );
 	public static Skill DEFENSE_BREATHLESS = new DefenseSkill( 23, "breathless", 5, new String[] { "inWall", "drown" }, new ItemStack( Block.waterStill ) );
 	public static Skill DEFENSE_FEATHERFALL = new DefenseSkill( 24, "featherFall", 3, new String[] { "fall" }, new ItemStack( Item.feather ) );
+	
+	public static Skill TRAVEL = new SpeedSkill( 25, "", 1, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
+	public static Skill TRAVEL_UPGRADE1 = new SpeedSkill( 26, "upgrade1", 3, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
+	public static Skill TRAVEL_UPGRADE2 = new SpeedSkill( 27, "upgrade2", 7, 0.5f, new ItemStack( Item.potion, 1, 8194 + 16384 ) );
 }
