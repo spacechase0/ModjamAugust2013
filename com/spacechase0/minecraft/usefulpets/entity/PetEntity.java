@@ -11,6 +11,7 @@ import com.spacechase0.minecraft.usefulpets.ai.TargetHurtOwnerAI;
 import com.spacechase0.minecraft.usefulpets.inventory.PetInventory;
 import com.spacechase0.minecraft.usefulpets.pet.*;
 import com.spacechase0.minecraft.usefulpets.pet.skill.AttackSkill;
+import com.spacechase0.minecraft.usefulpets.pet.skill.DefenseSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.FoodSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.Skill;
 
@@ -421,6 +422,37 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         {
         	damage = (damage + 1.0F) / 2.0F;
         }
+        
+        float percent = 1.f;
+        for ( Skill skill : Skill.skills.values() )
+        {
+        	if ( !hasSkill( skill.id ) || !( skill instanceof DefenseSkill ) )
+        	{
+        		continue;
+        	}
+        	DefenseSkill defense = ( DefenseSkill ) skill;
+        	
+        	if ( defense.types == null )
+        	{
+        		percent -= defense.percent;
+        	}
+        	else
+        	{
+        		boolean found = false;
+        		for ( String str : defense.types )
+        		{
+        			if ( str.equals( source.damageType ) )
+        			{
+        				found = true;
+        				break;
+        			}
+        		}
+        		
+        		percent -= defense.percent;
+        	}
+        }
+        
+        damage *= Math.max( percent, 0.f );
 
         return super.attackEntityFrom(source, damage);
     }

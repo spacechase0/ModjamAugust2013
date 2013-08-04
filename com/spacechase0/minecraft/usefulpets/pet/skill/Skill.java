@@ -73,9 +73,9 @@ public class Skill
 	public static Skill INVENTORY_ARMOR = new Skill( 17, "inventory.armor", 3.5f, 1.5f, new ItemStack( Item.field_111215_ce ), 5, new int[] { 5, 13 } );
 	public static Skill INVENTORY_WEAPON = new Skill( 18, "inventory.weapon", 3.5f, 2.5f, new ItemStack( Item.swordIron ), 5, new int[] { 5, 13 } ); // TODO: My item
 
-	public static Skill DEFENSE = new DefenseSkill( 19, "", 3, 10, new ItemStack( Item.plateLeather ) );
-	public static Skill DEFENSE_UPGRADE1 = new DefenseSkill( 20, "upgrade1", 5, 15, new ItemStack( Item.plateIron ) );
-	public static Skill DEFENSE_UPGRADE2 = new DefenseSkill( 21, "upgrade2", 10, 25, new ItemStack( Item.plateDiamond ) );
+	public static Skill DEFENSE = new DefenseSkill( 19, "", 3, 0.1f, new ItemStack( Item.plateLeather ) );
+	public static Skill DEFENSE_UPGRADE1 = new DefenseSkill( 20, "upgrade1", 5, 0.15f, new ItemStack( Item.plateIron ) );
+	public static Skill DEFENSE_UPGRADE2 = new DefenseSkill( 21, "upgrade2", 10, 0.25f, new ItemStack( Item.plateDiamond ) );
 	public static Skill DEFENSE_FIRE = new DefenseSkill( 22, "fire", 7, new String[] { "inFire", "onFire", "lava" }, new ItemStack( Block.fire ) );
 	public static Skill DEFENSE_BREATHLESS = new DefenseSkill( 23, "breathless", 5, new String[] { "inWall", "drown" }, new ItemStack( Block.waterStill ) );
 	public static Skill DEFENSE_FEATHERFALL = new DefenseSkill( 24, "featherFall", 3, new String[] { "fall" }, new ItemStack( Item.feather ) );

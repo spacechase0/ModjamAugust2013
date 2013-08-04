@@ -6,7 +6,7 @@ import com.spacechase0.minecraft.usefulpets.pet.food.FoodType;
 
 public class DefenseSkill extends Skill
 {
-	public DefenseSkill( int theId, String theName, int theLevelReq, ItemStack theIcon )
+	private DefenseSkill( int theId, String theName, int theLevelReq, ItemStack theIcon )
 	{
 		super( theId, ( theName.equals( "" ) ? "defense" : ( "defense." + theName ) ), getPosX( theId, theName ), getPosY( theId, theName ), theIcon );
 		levelReq = theLevelReq;
@@ -26,7 +26,7 @@ public class DefenseSkill extends Skill
 		prevId = id;
 	}
 	
-	public DefenseSkill( int theId, String theName, int theLevelReq, int thePercent, ItemStack theIcon )
+	public DefenseSkill( int theId, String theName, int theLevelReq, float thePercent, ItemStack theIcon )
 	{
 		this( theId, theName, theLevelReq, theIcon );
 		types = null;
@@ -37,7 +37,7 @@ public class DefenseSkill extends Skill
 	{
 		this( theId, theName, theLevelReq, theIcon );
 		types = theTypes;
-		percent = 100;
+		percent = 100.f;
 	}
 	
 	private static float getPosX( int id, String name )
@@ -70,8 +70,8 @@ public class DefenseSkill extends Skill
 		return base + 1.5f + ( diff % 2 );
 	}
 	
-	public String[] types;
-	public int percent;
+	public String[] types = null;
+	public float percent = 0.f;
 	private static int mainId;
 	private static int prevId;
 }
