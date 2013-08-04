@@ -28,7 +28,7 @@ public class UsefulPets
 	@Instance( "SC0_UsefulPets" )
 	public static UsefulPets instance;
 	
-	@SidedProxy( serverSide = "com.spacechase0.minecraft.usefulpets.CommonProxy",
+	@SidedProxy( serverSide = "com.spacechase0.minecraft.usefulpets.server.ServerProxy",
 			     clientSide = "com.spacechase0.minecraft.usefulpets.client.ClientProxy" )
 	public static CommonProxy proxy;
 	

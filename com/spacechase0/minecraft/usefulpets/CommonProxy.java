@@ -2,16 +2,23 @@ package com.spacechase0.minecraft.usefulpets;
 
 import com.spacechase0.minecraft.usefulpets.entity.PetEntity;
 
+import cpw.mods.fml.relauncher.Side;
+
 public class CommonProxy
 {
 	public void registerRenderers()
 	{
 	}
 	
-	public void setPendingPetForGui( PetEntity entity )
+	public PetEntity getPendingPetForGui( Side side )
 	{
-		pendingPetForGui = entity;
+		return pendingGui[ side.ordinal() ];
 	}
 	
-	public static PetEntity pendingPetForGui;
+	public void setPendingPetForGui( Side side, PetEntity entity )
+	{
+		pendingGui[ side.ordinal() ] = entity;
+	}
+	
+	private PetEntity[] pendingGui = new PetEntity[ 2 ];
 }

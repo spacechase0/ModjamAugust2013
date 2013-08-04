@@ -34,29 +34,27 @@ public class PetInventory implements IInventory
 	@Override
 	public ItemStack decrStackSize( int slot, int amount )
 	{
+		System.out.println("decr " + this + "."+slot + " by "+amount);
+		Thread.dumpStack();
 		// From InventoryBasic
-		ItemStack[] inventoryContents = stacks;
-		int par1 = slot;
-		int par2 = amount;
-		
-        if (inventoryContents[par1] != null)
+        if (stacks[slot] != null)
         {
             ItemStack itemstack;
 
-            if (inventoryContents[par1].stackSize <= par2)
+            if (stacks[slot].stackSize <= amount)
             {
-                itemstack = inventoryContents[par1];
-                inventoryContents[par1] = null;
+                itemstack = stacks[slot];
+                stacks[slot] = null;
                 this.onInventoryChanged();
                 return itemstack;
             }
             else
             {
-                itemstack = inventoryContents[par1].splitStack(par2);
+                itemstack = stacks[slot].splitStack(amount);
 
-                if (inventoryContents[par1].stackSize == 0)
+                if (stacks[slot].stackSize == 0)
                 {
-                    inventoryContents[par1] = null;
+                	stacks[slot] = null;
                 }
 
                 this.onInventoryChanged();
@@ -72,7 +70,9 @@ public class PetInventory implements IInventory
 	@Override
 	public ItemStack getStackInSlotOnClosing( int slot )
 	{
-		return getStackInSlot( slot );
+		ItemStack tmp = getStackInSlot( slot );
+		stacks[ slot ] = null;
+		return tmp;
 	}
 
 	@Override

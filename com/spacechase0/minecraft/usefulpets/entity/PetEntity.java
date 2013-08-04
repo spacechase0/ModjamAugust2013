@@ -14,6 +14,8 @@ import com.spacechase0.minecraft.usefulpets.pet.skill.AttackSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.FoodSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.Skill;
 
+import cpw.mods.fml.relauncher.Side;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
@@ -494,7 +496,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     {
     	if ( player.isSneaking() )
     	{
-    		UsefulPets.proxy.setPendingPetForGui( this );
+    		UsefulPets.proxy.setPendingPetForGui( ( worldObj.isRemote ? Side.CLIENT : Side.SERVER ), this );
     		player.openGui( UsefulPets.instance, UsefulPets.PET_INVENTORY_GUI_ID, worldObj, 0, 0, 0 );
     		return false;
     	}

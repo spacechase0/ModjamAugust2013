@@ -9,6 +9,7 @@ import com.spacechase0.minecraft.usefulpets.inventory.PetInventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.relauncher.Side;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -17,7 +18,7 @@ public class GuiHandler implements IGuiHandler
 	{
 		if ( id == UsefulPets.PET_INVENTORY_GUI_ID )
 		{
-			PetEntity pet = ( PetEntity ) CommonProxy.pendingPetForGui;
+			PetEntity pet = ( PetEntity ) UsefulPets.proxy.getPendingPetForGui( Side.SERVER );
 			return new PetInventoryContainer( player.inventory, pet.getInventory(), pet );
 		}
 		
@@ -29,12 +30,12 @@ public class GuiHandler implements IGuiHandler
 	{
 		if ( id == UsefulPets.PET_INVENTORY_GUI_ID )
 		{
-			PetEntity pet = ( PetEntity ) CommonProxy.pendingPetForGui;
+			PetEntity pet = ( PetEntity ) UsefulPets.proxy.getPendingPetForGui( Side.CLIENT );
 			return new PetInventoryGui( player.inventory, pet.getInventory(), pet );
 		}
 		else if ( id == UsefulPets.PET_SKILLS_GUI_ID )
 		{
-			return new PetSkillGui( player, CommonProxy.pendingPetForGui );
+			return new PetSkillGui( player, UsefulPets.proxy.getPendingPetForGui( Side.CLIENT ) );
 		}
 		
 		return null;
