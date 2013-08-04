@@ -59,11 +59,8 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		getNavigator().setAvoidsWater( true );
         tasks.addTask( 1, new EntityAISwimming( this ) );
         tasks.addTask( 2, aiSit );
-        
-        // TEMP
-        tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
-        tasks.addTask(4, new EntityAIAttackOnCollide(this, 1.0D, true));
-        
+        tasks.addTask( 3, new EntityAILeapAtTarget( this, 0.4F ) );
+        tasks.addTask( 4, new EntityAIAttackOnCollide( this, 1.0D, true ) );
         tasks.addTask( 5, new FollowOwnerAI( this, 1.0D, 10.0F, 3.5F ) );
         tasks.addTask( 7, new EntityAIWander(this, 1.0D));
         tasks.addTask( 9, new EntityAIWatchClosest( this, EntityPlayer.class, 9.0F ) );

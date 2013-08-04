@@ -53,17 +53,6 @@ pet.skill.inventory.armor.desc=Allows the pet to equip armor
 pet.skill.inventory.weapon.name=Weapon Slot
 pet.skill.inventory.weapon.desc=Allows the pet to equip a weapon over their claws
 
-pet.skill.travel.name=Travel
-pet.skill.travel.desc=Increases run speed by 25%
-pet.skill.travel.upgrade1.name=Faster (1)
-pet.skill.travel.upgrade1.desc=Increases run speed by 25%
-pet.skill.travel.upgrade2.name=Faster (2)
-pet.skill.travel.upgrade2.desc=Increases run speed by 50%
-pet.skill.travel.mount.name=Mountable
-pet.skill.travel.mount.desc=Allows you to ride your pet with a saddle
-pet.skill.travel.aquaticMount.name=Swimming Mount
-pet.skill.travel.aquaticMount.desc=Allows you to ride your pet in the water
-
 pet.skill.defense.name=Defense
 pet.skill.defense.desc=Reduces damage taken by 10%
 pet.skill.defense.upgrade1.name=Extra Defense (1)
@@ -74,3 +63,16 @@ pet.skill.defense.fire.name=Fire Immunity
 pet.skill.defense.fire.desc=Invulnerable to fire and lava.
 pet.skill.defense.breathless.name=Breathless
 pet.skill.defense.breathless.desc=Provides immunity to suffocation and drowning damage.
+pet.skill.defense.featherFall.name=Feather Falling
+pet.skill.defense.featherFall.desc=Provides immunity to falling damage.
+
+pet.skill.travel.name=Travel
+pet.skill.travel.desc=Increases run speed by 25%
+pet.skill.travel.upgrade1.name=Faster (1)
+pet.skill.travel.upgrade1.desc=Increases run speed by 25%
+pet.skill.travel.upgrade2.name=Faster (2)
+pet.skill.travel.upgrade2.desc=Increases run speed by 50%
+pet.skill.travel.mount.name=Mountable
+pet.skill.travel.mount.desc=Allows you to ride your pet with a saddle
+pet.skill.travel.aquaticMount.name=Swimming Mount
+pet.skill.travel.aquaticMount.desc=Allows you to ride your pet in the water
