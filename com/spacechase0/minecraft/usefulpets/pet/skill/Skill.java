@@ -46,7 +46,7 @@ public class Skill
 	
 	public static Skill forId( int id )
 	{
-		return skills.get( id );
+		return skills.get( id  );
 	}
 	
 	public static Skill HUNGER = new FoodSkill( 0, "", FoodType.SPECIES, new ItemStack( Item.porkRaw ) );

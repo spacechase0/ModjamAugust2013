@@ -34,7 +34,7 @@ pet.skill.repellant.desc=Keeps creepers away
 pet.skill.repellant.larger.name=Radius upgrade
 pet.skill.repellant.larger.desc=Increases range
 pet.skill.repellant.undead.name=Undead Repellant
-pet.skill.repellant.undead.name=Keeps undead away
+pet.skill.repellant.undead.desc=Keeps undead away
 pet.skill.repellant.spiders.name=Bug Repellant
 pet.skill.repellant.spiders.desc=Keeps the creepy crawlies away
 
