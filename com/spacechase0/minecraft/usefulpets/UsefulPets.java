@@ -18,6 +18,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -46,12 +48,14 @@ public class UsefulPets
 		registerRecipes();
 		registerEntities();
 		registerLanguage();
+		registerBonusChest();
 		proxy.registerRenderers();
 		
 		NetworkRegistry.instance().registerChannel( new PacketHandler(), "SC0_UP|CS" );
 		NetworkRegistry.instance().registerGuiHandler( this, new GuiHandler() );
-		
+
 		MinecraftForge.EVENT_BUS.register( avoidanceHandler = new AvoidanceEventHandler() );
+		MinecraftForge.EVENT_BUS.register( starterItemHandler = new StarterItemEventHandler() );
 	}
 	
 	@EventHandler
@@ -62,19 +66,19 @@ public class UsefulPets
 	
 	private void registerItems()
 	{
-		converter = new ConverterItem( getItemId( "converter", 0 ) );
-		GameRegistry.registerItem( converter, "converter" );
+		wand = new PetWandItem( getItemId( "wand", 0 ) );
+		GameRegistry.registerItem( wand, "wand" );
 	}
 	
 	private void registerRecipes()
 	{
-		GameRegistry.addRecipe( new ItemStack( converter ),
+		GameRegistry.addRecipe( new ItemStack( wand ),
 				                "*",
 				                "|",
 				                '*', Item.goldNugget,
 				                '|', Item.bone );
 
-		GameRegistry.addRecipe( new ItemStack( converter ),
+		GameRegistry.addRecipe( new ItemStack( wand ),
 				                " *",
 				                "| ",
 				                '*', Item.goldNugget,
@@ -92,6 +96,18 @@ public class UsefulPets
 		registerLanguage( "en_US" );
 	}
 	
+	private void registerBonusChest()
+	{
+		if ( config.get( "general", "bonusChestAdditions", true ).getBoolean( true ) )
+		{
+			ChestGenHooks bonusChest = ChestGenHooks.getInfo( ChestGenHooks.BONUS_CHEST );
+			bonusChest.addItem( new WeightedRandomChestContent( new ItemStack( Item.bone ), 3, 6, 4 ) );
+			bonusChest.addItem( new WeightedRandomChestContent( new ItemStack( Item.fishRaw ), 3, 6, 4 ) );
+			bonusChest.addItem( new WeightedRandomChestContent( new ItemStack( Item.monsterPlacer, 1, 95 ), 1, 1, 3 ) ); // Wolf
+			bonusChest.addItem( new WeightedRandomChestContent( new ItemStack( Item.monsterPlacer, 1, 98 ), 1, 1, 3 ) ); // Ocelot
+		}
+	}
+	
 	private int getItemId( String name, int itemNum )
 	{
 		return config.getItem( name, ITEM_ID_BASE + itemNum ).getInt();
@@ -102,11 +118,12 @@ public class UsefulPets
 		LanguageRegistry.instance().loadLocalization( "/assets/usefulpets/lang/" + lang + ".lang", lang, false );
 	}
 	
-	public ConverterItem converter;
+	public PetWandItem wand;
 	
 	public int petEntityId;
 	
 	public AvoidanceEventHandler avoidanceHandler;
+	public StarterItemEventHandler starterItemHandler;
 	
 	private Configuration config;
 	private static final int ITEM_ID_BASE = 15764;

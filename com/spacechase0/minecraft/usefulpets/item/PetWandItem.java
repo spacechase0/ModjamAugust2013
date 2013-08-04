@@ -12,13 +12,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
 
-public class ConverterItem extends Item
+public class PetWandItem extends Item
 {
-	public ConverterItem( int id )
+	public PetWandItem( int id )
 	{
 		super( id );
-		setUnlocalizedName( "petConverter" );
+		setUnlocalizedName( "petWand" );
 		setCreativeTab( CreativeTabs.tabTools );
+		setMaxStackSize( 1 );
 	}
 	
 	@Override

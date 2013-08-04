@@ -1,4 +1,4 @@
-item.petConverter.name=Pet Converter
+item.petWand.name=Pet Wand
 
 entity.pet.cat=Cat
 entity.pet.dog=Dog
@@ -10,6 +10,10 @@ gui.pet.level=Level
 gui.pet.freePoints=Free Points
 gui.pet.skillReq=Requires
 gui.pet.levelReq=Requires Level
+
+pet.level.success=Your pet has leveled up!
+pet.level.max=Your pet is at the maximum level.
+pet.level.need=You are missing: %s x %i
 
 pet.skill.hunger.name=Hunger
 pet.skill.hunger.desc=Allows eating
