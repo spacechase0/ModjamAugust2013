@@ -3,6 +3,8 @@ item.petConverter.name=Pet Converter
 entity.pet.cat=Cat
 entity.pet.dog=Dog
 
+gui.pet.inventory=Pet Inventory
+gui.pet.skills=Skills
 gui.pet.title=Pet Skills
 gui.pet.level=Level
 gui.pet.freePoints=Free Points

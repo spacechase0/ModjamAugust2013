@@ -10,5 +10,8 @@ public class CommonProxy
 	
 	public void setPendingPetForGui( PetEntity entity )
 	{
+		pendingPetForGui = entity;
 	}
+	
+	public static PetEntity pendingPetForGui;
 }

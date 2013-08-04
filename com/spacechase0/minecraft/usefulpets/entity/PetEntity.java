@@ -8,6 +8,7 @@ import com.spacechase0.minecraft.usefulpets.ai.FollowOwnerAI;
 import com.spacechase0.minecraft.usefulpets.ai.OwnerHurtTargetAI;
 import com.spacechase0.minecraft.usefulpets.ai.SitAI;
 import com.spacechase0.minecraft.usefulpets.ai.TargetHurtOwnerAI;
+import com.spacechase0.minecraft.usefulpets.inventory.PetInventory;
 import com.spacechase0.minecraft.usefulpets.pet.*;
 import com.spacechase0.minecraft.usefulpets.pet.skill.AttackSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.FoodSkill;
@@ -34,11 +35,13 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -254,6 +257,11 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		return !( target instanceof EntityCreeper );
 	}
 	
+	public IInventory getInventory()
+	{
+		return inv;
+	}
+	
 	// Entity
     @Override
     public void writeEntityToNBT( NBTTagCompound tag)
@@ -270,6 +278,22 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         	theSkills[ i ] = skills.get( i );
         }
         tag.setTag( "Skills", new NBTTagIntArray( "Skills", theSkills ) );
+        {
+        	NBTTagList list = new NBTTagList();
+        	for ( int i = 0; i < 12; ++i )
+        	{
+        		ItemStack stack = inv.getStackInSlot( i );
+        		
+        		NBTTagCompound compound = new NBTTagCompound();
+        		if ( stack != null )
+        		{
+        			stack.writeToNBT( compound );
+        		}
+        		
+        		list.appendTag( compound );
+        	}
+        	tag.setTag( "Inventory", list );
+        }
         
         tag.setBoolean( "Sitting", isSitting() );
         tag.setFloat( "Hunger", getHunger() );
@@ -292,6 +316,21 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         	skills.add( id );
         }
         dataWatcher.updateObject( DATA_SKILLS, getSkillsStack() );
+        if ( tag.getTag( "Inventory" ) != null )
+        {
+        	NBTTagList list = ( NBTTagList ) tag.getTag( "Inventory" );
+        	for ( int i = 0; i < Math.min( 12, list.tagCount() ); ++i )
+        	{
+        		NBTTagCompound compound = ( NBTTagCompound ) list.tagAt( i );
+        		if ( compound.hasNoTags() )
+        		{
+        			continue;
+        		}
+        		
+        		ItemStack stack = ItemStack.loadItemStackFromNBT( compound );
+        		inv.setInventorySlotContents( i, stack );
+        	}
+        }
         
         setSitting( tag.getBoolean( "Sitting" ) );
         setHunger( tag.getFloat( "Hunger" ) );
@@ -456,7 +495,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	if ( player.isSneaking() )
     	{
     		UsefulPets.proxy.setPendingPetForGui( this );
-    		player.openGui( UsefulPets.instance, UsefulPets.PET_GUI_ID, worldObj, 0, 0, 0 );
+    		player.openGui( UsefulPets.instance, UsefulPets.PET_INVENTORY_GUI_ID, worldObj, 0, 0, 0 );
     		return false;
     	}
     	
@@ -553,6 +592,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	private String ownerName = "Player";
 	private PetType type = PetType.CAT;
 	private List< Integer > skills = new ArrayList< Integer >();
+	private PetInventory inv = new PetInventory( this );
 	
 	// State stuff
 	private float saturation;

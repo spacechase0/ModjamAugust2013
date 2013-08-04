@@ -111,5 +111,6 @@ public class UsefulPets
 	private Configuration config;
 	private static final int ITEM_ID_BASE = 15764;
 	
-	public static final int PET_GUI_ID = 0;
+	public static final int PET_INVENTORY_GUI_ID = 0;
+	public static final int PET_SKILLS_GUI_ID = 1;
 }

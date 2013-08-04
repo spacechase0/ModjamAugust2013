@@ -13,12 +13,4 @@ public class ClientProxy extends CommonProxy
 	{
 		RenderingRegistry.registerEntityRenderingHandler( PetEntity.class, new PetEntityRenderer() );
 	}
-	
-	@Override
-	public void setPendingPetForGui( PetEntity entity )
-	{
-		pendingPetForGui = entity;
-	}
-	
-	public static PetEntity pendingPetForGui;
 }
