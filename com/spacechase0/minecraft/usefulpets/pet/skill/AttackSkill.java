@@ -30,6 +30,11 @@ public class AttackSkill extends Skill
 	
 	private static float getPosX( int id, String name )
 	{
+		if ( name.equals( "" ) )
+		{
+			return 1.5f;
+		}
+		
 		return 0.f;
 	}
 	
@@ -37,7 +42,7 @@ public class AttackSkill extends Skill
 	{
 		if ( name.equals( "" ) )
 		{
-			return 0;
+			return 2.4f;
 		}
 		
 		int diff = id - ( mainId + 1 );

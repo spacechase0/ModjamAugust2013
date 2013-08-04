@@ -47,7 +47,7 @@ public class RepellantSkill extends Skill
 	
 	private static float getPosX( int id, String name )
 	{
-		float base = 3;
+		float base = -3;
 		if ( name.equals( "" ) )
 		{
 			return base;
@@ -62,12 +62,12 @@ public class RepellantSkill extends Skill
 	{
 		if ( name.equals( "" ) )
 		{
-			return 0;
+			return 4.5f;
 		}
 		
 		int diff = id - ( mainId + 1 );
 		
-		return 1.5f + ( diff / 2 );
+		return 6 + ( diff / 2 );
 	}
 	
 	public float radius = 0.f;

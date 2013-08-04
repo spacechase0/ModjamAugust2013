@@ -66,10 +66,10 @@ public class Skill
 	public static Skill REPELLANT_UNDEAD = new RepellantSkill( 11, "undead", 6, EnumCreatureAttribute.UNDEAD, new ItemStack( Item.skull, 1, 0 ) );
 	public static Skill REPELLANT_SPIDERS = new RepellantSkill( 12, "spiders", 3, EnumCreatureAttribute.ARTHROPOD, new ItemStack( Item.spiderEye ) );
 
-	public static Skill INVENTORY = new Skill( 13, "inventory", 0, -3, new ItemStack( Block.chest ), 1, null );
-	public static Skill INVENTORY_UPGRADE1 = new Skill( 14, "inventory.upgrade1", 0, -4, new ItemStack( Block.chest ), 7, new int[] { 13 } );
-	public static Skill INVENTORY_UPGRADE2 = new Skill( 15, "inventory.upgrade2", 0, -5, new ItemStack( Block.chest ), 10, new int[] { 14 } );
-	public static Skill INVENTORY_FEEDING = new Skill( 16, "inventory.selfSufficient", -3, -3, new ItemStack( Item.pumpkinPie ), 7, new int[] { 0, 13 } );
-	public static Skill INVENTORY_ARMOR = new Skill( 17, "inventory.armor", -4, -4, new ItemStack( Item.field_111215_ce ), 5, new int[] { 5, 13 } );
-	public static Skill INVENTORY_WEAPON = new Skill( 18, "inventory.weapon", -5, -5, new ItemStack( Item.swordIron ), 5, new int[] { 5, 13 } ); // TODO: My item
+	public static Skill INVENTORY = new Skill( 13, "inventory", 4.5f, 0, new ItemStack( Block.chest ), 1, null );
+	public static Skill INVENTORY_UPGRADE1 = new Skill( 14, "inventory.upgrade1", 5.5f, 1.5f, new ItemStack( Block.chest ), 7, new int[] { 13 } );
+	public static Skill INVENTORY_UPGRADE2 = new Skill( 15, "inventory.upgrade2", 5.5f, 2.5f, new ItemStack( Block.chest ), 10, new int[] { 14 } );
+	public static Skill INVENTORY_FEEDING = new Skill( 16, "inventory.selfSufficient", 4.5f, -1.5f, new ItemStack( Item.pumpkinPie ), 7, new int[] { 0, 13 } );
+	public static Skill INVENTORY_ARMOR = new Skill( 17, "inventory.armor", 3.5f, 1.5f, new ItemStack( Item.field_111215_ce ), 5, new int[] { 5, 13 } );
+	public static Skill INVENTORY_WEAPON = new Skill( 18, "inventory.weapon", 3.5f, 2.5f, new ItemStack( Item.swordIron ), 5, new int[] { 5, 13 } ); // TODO: My item
 }
