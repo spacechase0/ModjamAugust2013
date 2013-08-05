@@ -294,6 +294,11 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		return inv;
 	}
 	
+	public boolean hasSaddle()
+	{
+		return ( inv.getStackInSlot( 0 ) != null && inv.getStackInSlot( 0 ).itemID == Item.saddle.itemID );
+	}
+	
 	// Entity
     @Override
     public void writeEntityToNBT( NBTTagCompound tag)
@@ -647,7 +652,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         		return true;
     		}
     	}
-    	else if ( held == null && hasSkill( Skill.TRAVEL_MOUNTABLE.id ) )
+    	else if ( held == null && hasSkill( Skill.TRAVEL_MOUNTABLE.id ) && hasSaddle() )
     	{
     		player.mountEntity( this );
     	}
@@ -717,7 +722,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     @Override
     public void moveEntityWithHeading(float par1, float par2)
     {
-        if (this.riddenByEntity != null/* && this.func_110257_ck()*/)
+        if (this.riddenByEntity != null && hasSkill( Skill.TRAVEL_MOUNTABLE.id ) && hasSaddle() && !isSitting()/* && this.func_110257_ck()*/)
         {
             this.prevRotationYaw = this.rotationYaw = this.riddenByEntity.rotationYaw;
             this.rotationPitch = this.riddenByEntity.rotationPitch * 0.5F;
