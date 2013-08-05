@@ -78,7 +78,7 @@ public class PetInventoryGui extends GuiContainer
         {
             this.drawTexturedModalRect(k + 7 + 18, l + 17, 0, 220, 18, 18);
         }
-        if ( false )
+        if ( pet.hasSkill( Skill.TRAVEL_MOUNTABLE.id ) )
         {
             this.drawTexturedModalRect(k + 7, l + 17, 18, 220, 18, 18);
         }

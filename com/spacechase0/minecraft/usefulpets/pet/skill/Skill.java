@@ -83,4 +83,5 @@ public class Skill
 	public static Skill TRAVEL = new SpeedSkill( 25, "", 1, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
 	public static Skill TRAVEL_UPGRADE1 = new SpeedSkill( 26, "upgrade1", 3, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
 	public static Skill TRAVEL_UPGRADE2 = new SpeedSkill( 27, "upgrade2", 7, 0.5f, new ItemStack( Item.potion, 1, 8194 + 16384 ) );
+	public static Skill TRAVEL_MOUNTABLE = new Skill( 28, "mountable", 0.5f, 9.f, new ItemStack( Item.saddle ), 12, new int[] { 25 } );
 }

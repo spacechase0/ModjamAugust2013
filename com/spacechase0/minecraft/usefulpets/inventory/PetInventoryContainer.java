@@ -24,7 +24,7 @@ public class PetInventoryContainer extends Container
         int j;
         int k;
         //*
-        //{ this.addSlotToContainer(new SaddleSlot(this, inv2, 0, 8, 18)); didSaddle = true; }
+        if ( pet.hasSkill( Skill.TRAVEL_MOUNTABLE.id ) ) { this.addSlotToContainer(new SaddleSlot(this, inv2, 0, 8, 18)); didSaddle = true; }
         if ( pet.hasSkill( Skill.INVENTORY_ARMOR.id ) ) { this.addSlotToContainer(new PetArmorSlot(this, inv2, 1, 26, 18, thePet)); didArmor = true; }
         if ( pet.hasSkill( Skill.INVENTORY_WEAPON.id ) ) { this.addSlotToContainer(new PetWeaponSlot(this, inv2, 2, 44, 18, thePet)); didWeapon = true; }
         
