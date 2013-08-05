@@ -13,7 +13,7 @@ public class Level
 	
 	public static int getLevelExperienceRequirements( int level )
 	{
-		return level * 2;
+		return ( int )( level * 1.5f );
 	}
 	
 	public static List< ItemStack > getLevelItemRequirements( int level )

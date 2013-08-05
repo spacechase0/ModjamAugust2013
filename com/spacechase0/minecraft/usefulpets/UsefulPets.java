@@ -23,7 +23,7 @@ import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 
-@Mod( modid = "SC0_UsefulPets", name = "Useful Pets", version = "0.1" )
+@Mod( modid = "SC0_UsefulPets", name = "Useful Pets", version = "0.1.1" )
 @NetworkMod( clientSideRequired = true, serverSideRequired = false )
 public class UsefulPets
 {
@@ -114,6 +114,12 @@ public class UsefulPets
 			bonusChest.addItem( new WeightedRandomChestContent( new ItemStack( Item.fishRaw ), 3, 6, 4 ) );
 			bonusChest.addItem( new WeightedRandomChestContent( new ItemStack( Item.monsterPlacer, 1, 95 ), 1, 1, 3 ) ); // Wolf
 			bonusChest.addItem( new WeightedRandomChestContent( new ItemStack( Item.monsterPlacer, 1, 98 ), 1, 1, 3 ) ); // Ocelot
+		}
+		{
+			ChestGenHooks dungeonChest = ChestGenHooks.getInfo( ChestGenHooks.DUNGEON_CHEST );
+			dungeonChest.addItem( new WeightedRandomChestContent( new ItemStack( goldClaws ), 1, 1, 6 ) );
+			dungeonChest.addItem( new WeightedRandomChestContent( new ItemStack( ironClaws ), 1, 1, 4 ) );
+			dungeonChest.addItem( new WeightedRandomChestContent( new ItemStack( diamondClaws ), 1, 1, 2 ) );
 		}
 	}
 	
