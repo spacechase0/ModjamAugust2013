@@ -56,7 +56,6 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 	public PetEntity( World world )
 	{
 		super( world );
-		
 		setSize( type.sizeX, type.sizeY );
 		
 		getNavigator().setAvoidsWater( true );
@@ -596,6 +595,10 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     			setSaturation( getSaturation() + food.getSaturationModifier() );
         		return true;
     		}
+    	}
+    	else if ( held == null && hasSkill( Skill.TRAVEL_MOUNTABLE.id ) )
+    	{
+    		player.mountEntity( this );
     	}
     	else
     	{
