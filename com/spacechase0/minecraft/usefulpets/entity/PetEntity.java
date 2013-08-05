@@ -47,7 +47,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class PetEntity extends EntityAnimal implements EntityOwnable
@@ -661,6 +663,100 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	
     	return 0;
     }
+    
+    // Copied from horses
+    @Override
+    public void moveEntityWithHeading(float par1, float par2)
+    {
+        if (this.riddenByEntity != null/* && this.func_110257_ck()*/)
+        {
+            this.prevRotationYaw = this.rotationYaw = this.riddenByEntity.rotationYaw;
+            this.rotationPitch = this.riddenByEntity.rotationPitch * 0.5F;
+            this.setRotation(this.rotationYaw, this.rotationPitch);
+            this.rotationYawHead = this.renderYawOffset = this.rotationYaw;
+            par1 = ((EntityLivingBase)this.riddenByEntity).moveStrafing * 0.5F;
+            par2 = ((EntityLivingBase)this.riddenByEntity).moveForward;
+
+            if (par2 <= 0.0F)
+            {
+                par2 *= 0.25F;
+                //this.field_110285_bP = 0;
+            }
+
+            // Jumping code?
+            /*
+            if (this.onGround && this.field_110277_bt == 0.0F &&false/*&& this.func_110209_cd() && !this.field_110294_bI*/)
+            {
+                par1 = 0.0F;
+                par2 = 0.0F;
+            }
+
+            if (this.field_110277_bt > 0.0F && !wasInAir && this.onGround)
+            {
+            	// 3.f = jump height
+                this.motionY = 3.f * (double)this.field_110277_bt;
+
+                if (this.isPotionActive(Potion.jump))
+                {
+                    this.motionY += (double)((float)(this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
+                }
+
+                wasInAir=true;
+                //this.func_110255_k(true);
+                this.isAirBorne = true;
+
+                if (par2 > 0.0F)
+                {
+                    float f2 = MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F);
+                    float f3 = MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F);
+                    this.motionX += (double)(-0.4F * f2 * this.field_110277_bt);
+                    this.motionZ += (double)(0.4F * f3 * this.field_110277_bt);
+                    this.playSound("mob.horse.jump", 0.4F, 1.0F);
+                }
+
+                this.field_110277_bt = 0.0F;
+            }
+            //*/
+
+            this.stepHeight = 1.0F;
+            this.jumpMovementFactor = this.getAIMoveSpeed() * 0.1F;
+
+            if (!this.worldObj.isRemote)
+            {
+                this.setAIMoveSpeed((float)this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e() / 2);
+                super.moveEntityWithHeading(par1, par2);
+                this.setAIMoveSpeed((float)this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e());
+            }
+
+            if (this.onGround)
+            {
+                this.field_110277_bt = 0.0F;
+                //this.func_110255_k(false);
+                wasInAir=false;
+            }
+
+            this.prevLimbYaw = this.limbYaw;
+            double d0 = this.posX - this.prevPosX;
+            double d1 = this.posZ - this.prevPosZ;
+            float f4 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0F;
+
+            if (f4 > 1.0F)
+            {
+                f4 = 1.0F;
+            }
+
+            this.limbYaw += (f4 - this.limbYaw) * 0.4F;
+            this.limbSwing += this.limbYaw;
+        }
+        else
+        {
+            this.stepHeight = 0.5F;
+            this.jumpMovementFactor = 0.02F;
+            super.moveEntityWithHeading(par1, par2);
+        }
+    }
+    private float field_110277_bt = 0;
+    private boolean wasInAir=false;
 
 	// EntityAnimal
 	@Override
