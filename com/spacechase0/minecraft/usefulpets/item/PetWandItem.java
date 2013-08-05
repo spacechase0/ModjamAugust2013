@@ -57,7 +57,6 @@ public class PetWandItem extends Item
 	{
 		if ( !entity.isTamed() )
 		{
-			// TODO: Localize properly
 			player.sendChatToPlayer( ChatMessageComponent.func_111077_e( "chat.pet.convert.notTamed" ) );
 			return;
 		}

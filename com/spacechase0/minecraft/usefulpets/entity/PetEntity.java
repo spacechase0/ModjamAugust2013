@@ -423,13 +423,57 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     	}
     	else
     	{
+    		setHunger( getHunger() - 0.0002f );
+    		
     		if ( getHunger() >= MAX_HUNGER / 2 && func_110143_aJ() < func_110138_aP() )
     		{
     			if ( ++regenTicks >= 35 )
     			{
     				setEntityHealth( func_110143_aJ() + 1 );
-    				useHunger( 0.25f );
+    				useHunger( 0.2f );
     				regenTicks = 0;
+    			}
+    		}
+    		
+    		if ( getHunger() < MAX_HUNGER && hasSkill( Skill.INVENTORY_FEEDING.id ) )
+    		{
+    			for ( int i = 3; i < inv.getSizeInventory(); ++i )
+    			{
+    				ItemStack stack = inv.getStackInSlot( i );
+	    	    	if ( stack != null && stack.getItem() instanceof ItemFood )
+	    	    	{
+	    	    		ItemFood food = ( ItemFood ) stack.getItem();
+	    	    		
+	    	    		boolean canEat = false;
+	    	    		for ( int id : skills )
+	    	    		{
+	    	    			Skill skill = Skill.forId( id );
+	    	    			if ( !( skill instanceof FoodSkill ) )
+	    	    			{
+	    	    				continue;
+	    	    			}
+	    	    			FoodSkill foodSkill = ( FoodSkill ) skill;
+	    	    			
+	    	    			if ( foodSkill.type.doesMatch( type, stack ) )
+	    	    			{
+	    	    				canEat = true;
+	    	    				break;
+	    	    			}
+	    	    		}
+
+	    	    		/*
+	    	    		System.out.println(getHunger());
+	    	    		System.out.println(food.getHealAmount());
+	    	    		System.out.println("");
+	    	    		//*/
+	    	    		//System.out.println( getHunger() + food.getHealAmount() );
+	    	    		if ( canEat && getHunger() + food.getHealAmount() <= MAX_HUNGER )
+	    	    		{
+	    	    			setHunger( getHunger() + food.getHealAmount() );
+	    	    			setSaturation( getSaturation() + food.getSaturationModifier() );
+	    	    			inv.decrStackSize( i, 1 );
+	    	    		}
+	    	    	}
     			}
     		}
     	}
@@ -449,8 +493,6 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		}
 		
         Entity entity = source.getEntity();
-        aiSit.setSitting( false );
-        setSitting( false );
 
         if (entity != null && !(entity instanceof EntityPlayer) && !(entity instanceof EntityArrow))
         {
@@ -487,6 +529,13 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
         }
         
         damage *= Math.max( percent, 0.f );
+        if ( damage <= 0.f )
+        {
+        	return false;
+        }
+        
+        aiSit.setSitting( false );
+        setSitting( false );
 
         return super.attackEntityFrom(source, damage);
     }
