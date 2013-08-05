@@ -80,8 +80,8 @@ public class Skill
 	public static Skill DEFENSE_BREATHLESS = new DefenseSkill( 23, "breathless", 5, new String[] { "inWall", "drown" }, new ItemStack( Block.waterStill ) );
 	public static Skill DEFENSE_FEATHERFALL = new DefenseSkill( 24, "featherFall", 7, new String[] { "fall" }, new ItemStack( Item.feather ) );
 	
-	public static Skill TRAVEL = new SpeedSkill( 25, "", 3, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
-	public static Skill TRAVEL_UPGRADE1 = new SpeedSkill( 26, "upgrade1", 15, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
-	public static Skill TRAVEL_UPGRADE2 = new SpeedSkill( 27, "upgrade2", 17, 0.5f, new ItemStack( Item.potion, 1, 8194 + 16384 ) );
+	public static Skill TRAVEL = new SpeedSkill( 25, "", 3, 0.2f, new ItemStack( Item.potion, 1, 8194 ) );
+	public static Skill TRAVEL_UPGRADE1 = new SpeedSkill( 26, "upgrade1", 15, 0.2f, new ItemStack( Item.potion, 1, 8194 ) );
+	public static Skill TRAVEL_UPGRADE2 = new SpeedSkill( 27, "upgrade2", 17, 0.3f, new ItemStack( Item.potion, 1, 8194 + 16384 ) );
 	public static Skill TRAVEL_MOUNTABLE = new Skill( 28, "travel.mountable", 0.5f, 9.f, new ItemStack( Item.saddle ), 10, new int[] { 25 } );
 }

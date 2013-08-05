@@ -80,11 +80,11 @@ pet.skill.defense.featherFall.name=Feather Falling
 pet.skill.defense.featherFall.desc=Provides immunity to falling damage.
 
 pet.skill.travel.name=Travel
-pet.skill.travel.desc=Increases run speed by 25%
+pet.skill.travel.desc=Increases run speed by 20%
 pet.skill.travel.upgrade1.name=Faster (1)
-pet.skill.travel.upgrade1.desc=Increases run speed by 25%
+pet.skill.travel.upgrade1.desc=Increases run speed by 20%
 pet.skill.travel.upgrade2.name=Faster (2)
-pet.skill.travel.upgrade2.desc=Increases run speed by 50%
+pet.skill.travel.upgrade2.desc=Increases run speed by 30%
 pet.skill.travel.mountable.name=Mountable
 pet.skill.travel.mountable.desc=Allows you to ride your pet with a saddle. Their fragile frame does not allow jumping.
 pet.skill.travel.aquaticMount.name=Swimming Mount
