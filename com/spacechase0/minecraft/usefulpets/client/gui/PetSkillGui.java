@@ -458,7 +458,7 @@ public class PetSkillGui extends GuiScreen
                 GL11.glEnable(GL11.GL_CULL_FACE);
                 renderitem.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.func_110434_K(), achievement2.icon, i5 + 3, l4 + 3);
                 GL11.glColor4f( 1.f, 1.f, 1.f, 1.f );
-                GL11.glBlendFunc(GL11.GL_SRC_ALPHA , GL11.GL_ONE_MINUS_SRC_ALPHA);
+                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 GL11.glDisable(GL11.GL_LIGHTING);
 
                 if (!pet.hasSkillRequirements(achievement2.id) && !pet.hasSkill( achievement2.id ))

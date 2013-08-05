@@ -26,12 +26,12 @@ public class PetInventoryContainer extends Container
         //*
         //{ this.addSlotToContainer(new SaddleSlot(this, inv2, 0, 8, 18)); didSaddle = true; }
         if ( pet.hasSkill( Skill.INVENTORY_ARMOR.id ) ) { this.addSlotToContainer(new PetArmorSlot(this, inv2, 1, 26, 18, thePet)); didArmor = true; }
-        if ( pet.hasSkill( Skill.INVENTORY_WEAPON.id ) ) { this.addSlotToContainer(new PetArmorSlot(this, inv2, 2, 26, 18, thePet)); didWeapon = true; } // TODO: PetWeaponSlot
+        if ( pet.hasSkill( Skill.INVENTORY_WEAPON.id ) ) { this.addSlotToContainer(new PetWeaponSlot(this, inv2, 2, 44, 18, thePet)); didWeapon = true; }
         
         if (pet.hasSkill( Skill.INVENTORY.id ) )
         {
         	invAmount = ( pet.getInventory().getSizeInventory() - 3 );
-            for (j = 0; j < ( pet.getInventory().getSizeInventory() - 3 ) / 3; ++j)
+            for (j = 0; j < invAmount / 3; ++j)
             {
                 for (k = 0; k < 3; ++k)
                 {

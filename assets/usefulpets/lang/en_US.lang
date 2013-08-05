@@ -1,4 +1,7 @@
 item.petWand.name=Pet Wand
+item.clawIron.name=Iron Claw Covers
+item.clawGold.name=Gold Claw Covers
+item.clawDiamond.name=Diamond Claw Covers
 
 entity.pet.cat=Cat
 entity.pet.dog=Dog

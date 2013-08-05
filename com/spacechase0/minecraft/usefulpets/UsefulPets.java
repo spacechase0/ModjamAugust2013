@@ -68,6 +68,15 @@ public class UsefulPets
 	{
 		wand = new PetWandItem( getItemId( "wand", 0 ) );
 		GameRegistry.registerItem( wand, "wand" );
+
+		goldClaws = new ClawItem( getItemId( "goldClaws", 1 ), "gold", 1 );
+		GameRegistry.registerItem( goldClaws, "goldClaws" );
+		
+		ironClaws = new ClawItem( getItemId( "ironClaws", 1 ), "iron", 3 );
+		GameRegistry.registerItem( ironClaws, "ironClaws" );
+		
+		diamondClaws = new ClawItem( getItemId( "diamondClaws", 1 ), "diamond", 5 );
+		GameRegistry.registerItem( diamondClaws, "diamondClaws" );
 	}
 	
 	private void registerRecipes()
@@ -119,6 +128,9 @@ public class UsefulPets
 	}
 	
 	public PetWandItem wand;
+	public ClawItem goldClaws;
+	public ClawItem ironClaws;
+	public ClawItem diamondClaws;
 	
 	public int petEntityId;
 	

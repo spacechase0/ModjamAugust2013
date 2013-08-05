@@ -76,15 +76,15 @@ public class PetInventoryGui extends GuiContainer
         
         if ( pet.hasSkill( Skill.INVENTORY_ARMOR.id ) )
         {
-            this.drawTexturedModalRect(k + 4 + 18, l + 17, 0, 220, 18, 18);
+            this.drawTexturedModalRect(k + 7 + 18, l + 17, 0, 220, 18, 18);
         }
         if ( false )
         {
-            this.drawTexturedModalRect(k + 4, l + 17, 18, 220, 18, 18);
+            this.drawTexturedModalRect(k + 7, l + 17, 18, 220, 18, 18);
         }
         if ( pet.hasSkill( Skill.INVENTORY_WEAPON.id ) )
         {
-            this.drawTexturedModalRect(k + 4 + 36, l + 17, 36, 220, 18, 18);
+            this.drawTexturedModalRect(k + 7 + 36, l + 17, 36, 220, 18, 18);
         }
         
         if ( pet.hasSkill( Skill.INVENTORY.id ) )

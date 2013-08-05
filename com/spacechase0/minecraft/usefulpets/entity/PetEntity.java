@@ -9,6 +9,7 @@ import com.spacechase0.minecraft.usefulpets.ai.OwnerHurtTargetAI;
 import com.spacechase0.minecraft.usefulpets.ai.SitAI;
 import com.spacechase0.minecraft.usefulpets.ai.TargetHurtOwnerAI;
 import com.spacechase0.minecraft.usefulpets.inventory.PetInventory;
+import com.spacechase0.minecraft.usefulpets.item.ClawItem;
 import com.spacechase0.minecraft.usefulpets.pet.*;
 import com.spacechase0.minecraft.usefulpets.pet.skill.AttackSkill;
 import com.spacechase0.minecraft.usefulpets.pet.skill.DefenseSkill;
@@ -620,7 +621,42 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
     		damage += attack.damage;
     	}
     	
+    	if ( hasSkill( Skill.INVENTORY_WEAPON.id ) && inv.getStackInSlot( 2 ) != null )
+    	{
+    		ItemStack stack = inv.getStackInSlot( 2 );
+    		if ( stack.getItem() instanceof ClawItem )
+    		{
+    			ClawItem claw = ( ClawItem ) stack.getItem();
+    			damage += claw.damage;
+    		}
+    	}
+    	
         return entity.attackEntityFrom( DamageSource.causeMobDamage( this ), (float) damage );
+    }
+    
+    @Override
+    public int getTotalArmorValue()
+    {
+    	if ( !hasSkill( Skill.INVENTORY_ARMOR.id ) || inv.getStackInSlot( 1 ) == null )
+    	{
+    		return 0;
+    	}
+    	
+    	ItemStack stack = inv.getStackInSlot( 1 );
+    	if ( stack.itemID == Item.field_111215_ce.itemID )
+    	{
+    		return 5;
+    	}
+    	else if ( stack.itemID == Item.field_111216_cf.itemID )
+    	{
+    		return 7;
+    	}
+    	else if ( stack.itemID == Item.field_111213_cg.itemID )
+    	{
+    		return 11;
+    	}
+    	
+    	return 0;
     }
 
 	// EntityAnimal

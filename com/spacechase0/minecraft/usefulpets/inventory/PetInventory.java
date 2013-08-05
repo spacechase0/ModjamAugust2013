@@ -34,8 +34,6 @@ public class PetInventory implements IInventory
 	@Override
 	public ItemStack decrStackSize( int slot, int amount )
 	{
-		System.out.println("decr " + this + "."+slot + " by "+amount);
-		Thread.dumpStack();
 		// From InventoryBasic
         if (stacks[slot] != null)
         {
