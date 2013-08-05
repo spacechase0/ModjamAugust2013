@@ -11,9 +11,15 @@ gui.pet.freePoints=Free Points
 gui.pet.skillReq=Requires
 gui.pet.levelReq=Requires Level
 
-pet.level.success=Your pet has leveled up!
-pet.level.max=Your pet is at the maximum level.
-pet.level.need=You are missing: %s x %i
+chat.pet.convert.success=Converted!
+chat.pet.convert.notTamed=This animal isn't tamed!
+chat.pet.convert.needOwnership=You don't own this pet.
+chat.pet.convert.failure=This pet cannot be converted.
+chat.pet.level.success=Your pet has leveled up!
+chat.pet.level.max=Your pet is at the maximum level.
+chat.pet.level.missing=You are missing: %s x %s
+
+misc.level.name=Levels
 
 pet.skill.hunger.name=Hunger
 pet.skill.hunger.desc=Allows eating
@@ -60,9 +66,9 @@ pet.skill.inventory.weapon.desc=Allows the pet to equip a weapon over their claw
 pet.skill.defense.name=Defense
 pet.skill.defense.desc=Reduces damage taken by 10%
 pet.skill.defense.upgrade1.name=Extra Defense (1)
-pet.skill.defense.upgrade1.desc=Reduces damage taken by 15%, and no cactus damage
+pet.skill.defense.upgrade1.desc=Reduces damage taken by 15%.
 pet.skill.defense.upgrade2.name=Extra Defense (2)
-pet.skill.defense.upgrade2.desc=Reduces damage taken by 25%, and no cactus damage
+pet.skill.defense.upgrade2.desc=Reduces damage taken by 25%.
 pet.skill.defense.fire.name=Fire Immunity
 pet.skill.defense.fire.desc=Invulnerable to fire and lava.
 pet.skill.defense.breathless.name=Breathless

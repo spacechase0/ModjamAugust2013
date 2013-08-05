@@ -11,12 +11,12 @@ public class Level
 {
 	public static final int MAX_LEVEL = 20;
 	
-	public int getLevelExperienceRequirements( int level )
+	public static int getLevelExperienceRequirements( int level )
 	{
 		return level * 2;
 	}
 	
-	public List< ItemStack > getLevelItemRequirements( int level )
+	public static List< ItemStack > getLevelItemRequirements( int level )
 	{
 		List< ItemStack > list = new ArrayList< ItemStack >();
 		

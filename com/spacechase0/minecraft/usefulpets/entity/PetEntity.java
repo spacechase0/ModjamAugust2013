@@ -81,6 +81,17 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 		dataWatcher.updateObject( DATA_LEVEL, level );
 	}
 	
+	public void levelUp()
+	{
+		if ( getLevel() >= Level.MAX_LEVEL )
+		{
+			return;
+		}
+		
+		setLevel( getLevel() + 1 );
+		setFreeSkillPoints( getFreeSkillPoints() + 1 );
+	}
+	
 	public int getFreeSkillPoints()
 	{
 		return dataWatcher.getWatchableObjectInt( DATA_FREE_POINTS );
