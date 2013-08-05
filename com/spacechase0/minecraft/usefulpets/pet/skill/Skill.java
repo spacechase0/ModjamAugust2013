@@ -68,20 +68,20 @@ public class Skill
 
 	public static Skill INVENTORY = new Skill( 13, "inventory", 4.5f, 0, new ItemStack( Block.chest ), 1, null );
 	public static Skill INVENTORY_UPGRADE1 = new Skill( 14, "inventory.upgrade1", 5.5f, 1.5f, new ItemStack( Block.chest ), 7, new int[] { 13 } );
-	public static Skill INVENTORY_UPGRADE2 = new Skill( 15, "inventory.upgrade2", 5.5f, 2.5f, new ItemStack( Block.chest ), 12, new int[] { 14 } );
-	public static Skill INVENTORY_FEEDING = new Skill( 16, "inventory.selfSufficient", 4.5f, -1.5f, new ItemStack( Item.pumpkinPie ), 7, new int[] { 0, 13 } );
+	public static Skill INVENTORY_UPGRADE2 = new Skill( 15, "inventory.upgrade2", 5.5f, 2.5f, new ItemStack( Block.chest ), 15, new int[] { 14 } );
+	public static Skill INVENTORY_FEEDING = new Skill( 16, "inventory.selfSufficient", 4.5f, -1.5f, new ItemStack( Item.pumpkinPie ), 10, new int[] { 0, 13 } );
 	public static Skill INVENTORY_ARMOR = new Skill( 17, "inventory.armor", 3.5f, 1.5f, new ItemStack( Item.field_111215_ce ), 5, new int[] { 5, 13 } );
-	public static Skill INVENTORY_WEAPON = new Skill( 18, "inventory.weapon", 3.5f, 2.5f, new ItemStack( Item.swordIron ), 5, new int[] { 5, 13 } ); // TODO: My item
+	public static Skill INVENTORY_WEAPON = new Skill( 18, "inventory.weapon", 3.5f, 2.5f, new ItemStack( Item.swordIron ),17, new int[] { 5, 13 } ); // TODO: My item
 
-	public static Skill DEFENSE = new DefenseSkill( 19, "", 3, 0.1f, new ItemStack( Item.plateLeather ) );
+	public static Skill DEFENSE = new DefenseSkill( 19, "", 1, 0.1f, new ItemStack( Item.plateLeather ) );
 	public static Skill DEFENSE_UPGRADE1 = new DefenseSkill( 20, "upgrade1", 5, 0.15f, new ItemStack( Item.plateIron ) );
-	public static Skill DEFENSE_UPGRADE2 = new DefenseSkill( 21, "upgrade2", 10, 0.25f, new ItemStack( Item.plateDiamond ) );
-	public static Skill DEFENSE_FIRE = new DefenseSkill( 22, "fire", 7, new String[] { "inFire", "onFire", "lava" }, new ItemStack( Block.fire ) );
+	public static Skill DEFENSE_UPGRADE2 = new DefenseSkill( 21, "upgrade2", 12, 0.25f, new ItemStack( Item.plateDiamond ) );
+	public static Skill DEFENSE_FIRE = new DefenseSkill( 22, "fire", 10, new String[] { "inFire", "onFire", "lava" }, new ItemStack( Block.fire ) );
 	public static Skill DEFENSE_BREATHLESS = new DefenseSkill( 23, "breathless", 5, new String[] { "inWall", "drown" }, new ItemStack( Block.waterStill ) );
-	public static Skill DEFENSE_FEATHERFALL = new DefenseSkill( 24, "featherFall", 3, new String[] { "fall" }, new ItemStack( Item.feather ) );
+	public static Skill DEFENSE_FEATHERFALL = new DefenseSkill( 24, "featherFall", 7, new String[] { "fall" }, new ItemStack( Item.feather ) );
 	
-	public static Skill TRAVEL = new SpeedSkill( 25, "", 1, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
-	public static Skill TRAVEL_UPGRADE1 = new SpeedSkill( 26, "upgrade1", 3, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
-	public static Skill TRAVEL_UPGRADE2 = new SpeedSkill( 27, "upgrade2", 7, 0.5f, new ItemStack( Item.potion, 1, 8194 + 16384 ) );
-	public static Skill TRAVEL_MOUNTABLE = new Skill( 28, "mountable", 0.5f, 9.f, new ItemStack( Item.saddle ), 12, new int[] { 25 } );
+	public static Skill TRAVEL = new SpeedSkill( 25, "", 3, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
+	public static Skill TRAVEL_UPGRADE1 = new SpeedSkill( 26, "upgrade1", 15, 0.25f, new ItemStack( Item.potion, 1, 8194 ) );
+	public static Skill TRAVEL_UPGRADE2 = new SpeedSkill( 27, "upgrade2", 17, 0.5f, new ItemStack( Item.potion, 1, 8194 + 16384 ) );
+	public static Skill TRAVEL_MOUNTABLE = new Skill( 28, "mountable", 0.5f, 9.f, new ItemStack( Item.saddle ), 10, new int[] { 25 } );
 }

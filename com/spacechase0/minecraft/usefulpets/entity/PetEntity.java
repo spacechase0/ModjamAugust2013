@@ -685,7 +685,7 @@ public class PetEntity extends EntityAnimal implements EntityOwnable
 
             // Jumping code?
             /*
-            if (this.onGround && this.field_110277_bt == 0.0F &&false/*&& this.func_110209_cd() && !this.field_110294_bI*/)
+            if (this.onGround && this.field_110277_bt == 0.0F &&false/*&& this.func_110209_cd() && !this.field_110294_bI)
             {
                 par1 = 0.0F;
                 par2 = 0.0F;
